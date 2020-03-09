@@ -5,3 +5,9 @@
     background: #AC6D86;
     color: white;
 }
+
+#bannerLink {
+    outline: none;
+    text-decoration: none;
+    color: white;
+}
