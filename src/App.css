@@ -1,15 +1,20 @@
 body {
-  background: dimgray;
+  background: bisque;
 }
 
 #banner {
   text-align: center;
-  background: coral;
+  background: aquamarine;
 }
 
 #sideBar {
   width: 22%;
-  background: slategray;
+  background: lightskyblue;
   float: right;
   padding: 10px;
+}
+
+#topBar {
+  width: 100%;
+  background-color: lightpink;
 }

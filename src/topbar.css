@@ -1,0 +1,13 @@
+#createButton {
+    margin: 5px;
+}
+
+#searchBar {
+    margin: 5px;
+    padding: 8px;
+}
+
+#loginButton {
+    float: right;
+    margin: 5px;
+}
