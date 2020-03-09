@@ -2,12 +2,13 @@ import React from 'react'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Button from '@material-ui/core/Button'
+import './createPost.css'
 
 let editor2 = null
 
 export const CreatePost = () => {
   return (
-    <div>
+    <div id={'editor'}>
       <p>This is where you create a new post</p>
       <CKEditor
         editor={ ClassicEditor }
@@ -35,6 +36,7 @@ export const CreatePost = () => {
 
 const SubmitButton = (props) => (
   <Button
+    id={'submitButton'}
     variant={'contained'}
     fullWidth={false}
     color={'secondary'}
