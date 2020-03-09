@@ -19,7 +19,7 @@ const CreatePostButton = (props) => (
     id={'createButton'}
     variant={'contained'}
     fullWidth={false}
-    color={'primary'}
+    color={'secondary'}
     component={Link} to="/createpost/">
     Create blog post
   </Button>
@@ -30,7 +30,7 @@ const LoginButton = (props) => (
     id={'loginButton'}
     variant={'contained'}
     fullWidth={false}
-    color={'primary'}
+    color={'secondary'}
     startIcon={<Icon>person</Icon>}>
     {props.loggedIn ? 'Logout' : 'Login'}
   </Button>

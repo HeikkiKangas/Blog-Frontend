@@ -1,20 +1,6 @@
 body {
-  background: bisque;
+  background: #F8E3D6;
+  color: #91788E;
 }
 
-#banner {
-  text-align: center;
-  background: aquamarine;
-}
 
-#sideBar {
-  width: 22%;
-  background: lightskyblue;
-  float: right;
-  padding: 10px;
-}
-
-#topBar {
-  width: 100%;
-  background-color: lightpink;
-}
