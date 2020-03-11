@@ -5,3 +5,7 @@
 #submitButton {
     margin: 10px 0px 0px 0px;
 }
+
+.ck-editor__editable {
+    min-height: 400px !important;
+}

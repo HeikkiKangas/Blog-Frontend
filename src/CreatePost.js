@@ -12,7 +12,7 @@ export const CreatePost = () => {
       <p>This is where you create a new post</p>
       <CKEditor
         editor={ ClassicEditor }
-        data="<p>Hello from CKEditor 5!</p>"
+        data="<p>Dear diary, </p>"
         onInit={ editor => {
           // You can store the "editor" and use when it is needed.
           editor2 = editor
