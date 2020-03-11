@@ -1,5 +1,6 @@
 #titleInput {
     margin: 0px 0px 10px 0px;
+    padding: 7px;
 }
 
 #authorInput {
@@ -20,4 +21,17 @@
 
 .ck-editor__editable {
     min-height: 400px !important;
+}
+
+input[type=text] {
+    box-sizing: border-box;
+    border: 3px solid #F8E3D6;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+input[type=text]:focus {
+    border: 3px solid #E498A5;
+    outline: none;
 }
