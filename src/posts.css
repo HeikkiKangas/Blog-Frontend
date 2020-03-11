@@ -1,0 +1,22 @@
+#posts {
+    width: 74%;
+    float: left;
+}
+
+.post {
+    border-style: solid;
+    margin: 15px;
+    padding: 5px 15px 10px 15px;
+}
+
+#commentCount {
+    margin: 5px;
+}
+
+#likeCount {
+    margin: 5px;
+}
+
+#tags {
+    margin: 5px;
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import './posts.css'
+import {SideBar} from "./SideBar";
 
 export const Posts = () => {
   const [posts, setPosts] = React.useState(null)
@@ -16,9 +17,12 @@ export const Posts = () => {
   }, [])
 
   return (
-    <div id='posts'>
-      { posts == null ? <p id='loadingMsg'>Loading posts.</p>
-        : posts.map(post => <Post post={post} key={post.id}/>) }
+    <div>
+      <div id='posts'>
+        { posts == null ? <p id='loadingMsg'>Loading posts.</p>
+          : posts.map(post => <Post post={post} key={post.id}/>) }
+      </div>
+      <SideBar />
     </div>
   )
 }

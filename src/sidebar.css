@@ -1,7 +1,7 @@
 #sideBar {
-    margin: 10px;
-    width: 22%;
+    margin: 15px 0px 0px 5px;
+    width: 24%;
     background: #F7C8C2;
-    float: right;
-    padding: 10px;
+    float: left;
+    padding: 0px 0px 0px 15px;
 }
