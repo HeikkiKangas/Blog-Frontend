@@ -1,4 +1,5 @@
 import React from 'react'
+import './posts.css'
 
 export const Posts = () => {
   const [posts, setPosts] = React.useState(null)
