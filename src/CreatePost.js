@@ -9,7 +9,6 @@ let editor2 = null
 export const CreatePost = () => {
   return (
     <div id={'editor'}>
-      <p>This is where you create a new post</p>
       <CKEditor
         editor={ ClassicEditor }
         data="<p>Dear diary, </p>"
