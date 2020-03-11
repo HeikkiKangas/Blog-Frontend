@@ -1,8 +1,8 @@
 import React from 'react'
 import './posts.css'
-import {SideBar} from "./SideBar";
-import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom";
+import { SideBar } from './SideBar'
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 
 export const Posts = () => {
   const [posts, setPosts] = React.useState(null)
@@ -29,24 +29,24 @@ export const Posts = () => {
   )
 }
 
-const Post = (props) => (
+const Post = ({ post }) => (
   <div className='post'>
-    <EditButton id={props.post.id}/>
-    <DeleteButton id={props.post.id}/>
-    <h1 className='title'>{props.post.title}</h1>
-    <h3 className='author'>{props.post.author.userName}</h3>
-    {props.post.author.admin ? <p className='authorIsAdmin'>Admin user</p> : null}
-    <p className='timestamp'>{props.post.timestamp}</p>
-    <p className='text'>{props.post.text}</p>
-    <Comments count={props.post.comments.length} />
-    <Likes count={props.post.likes.length} />
-    <Tags post={props.post} />
+    <EditButton id={post.id}/>
+    <DeleteButton id={post.id}/>
+    <h1 className='title'>{post.title}</h1>
+    <h3 className='author'>{post.author.userName}</h3>
+    {post.author.admin ? <p className='authorIsAdmin'>Admin user</p> : null}
+    <p className='timestamp'>{post.timestamp}</p>
+    <p className='text'>{post.text}</p>
+    <Comments count={post.comments.length} />
+    <Likes count={post.likes.length} />
+    <Tags tags={post.tags} />
   </div>
 )
 
-const Comments = (props) => <a id='commentCount' href='localhost:3000'>{props.count} Comments</a>
-const Likes = (props) => <a id='likeCount' href='localhost:3000'>{props.count} Likes</a>
-const Tags = (props) => <div id='tags'>{props.post.tags.map(tag => <a href='localhost:3000' key={props.post.id}>{tag}</a>)}</div>
+const Comments = ({ count }) => <a id='commentCount' href='localhost:3000'>{count} Comments</a>
+const Likes = ({ count }) => <a id='likeCount' href='localhost:3000'>{count} Likes</a>
+const Tags = ({ tags }) => <div id='tags'>{tags.map(tag => <a href='localhost:3000' key={tag}>{tag}</a>)}</div>
 
 const EditButton = (props) => (
   <Button
