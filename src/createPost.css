@@ -1,8 +1,20 @@
+#titleInput {
+    margin: 0px 0px 10px 0px;
+}
+
+#authorInput {
+    margin: 0px 0px 10px 0px;
+}
+
 #editor {
     margin: 10px 50px 0px 10px;
 }
 
 #submitButton {
+    margin: 10px 0px 0px 0px;
+}
+
+#tagInput {
     margin: 10px 0px 0px 0px;
 }
 

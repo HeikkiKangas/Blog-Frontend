@@ -9,6 +9,9 @@ let editor2 = null
 export const CreatePost = () => {
   return (
     <div id={'editor'}>
+      <input type="text" placeholder="Title" id="titleInput"/>
+      <br/>
+      <input type="text" placeholder="Author" id="authorInput"/>
       <CKEditor
         editor={ ClassicEditor }
         data="<p>Dear diary, </p>"
@@ -18,8 +21,8 @@ export const CreatePost = () => {
           console.log('Editor is ready to use!', editor)
         } }
         onChange={ (event, editor) => {
-          const data = editor.getData()
-          console.log({ event, editor, data })
+          // const data = editor.getData()
+          // console.log({ event, editor, data })
         } }
         onBlur={ (event, editor) => {
           console.log('Blur.', editor)
@@ -28,6 +31,8 @@ export const CreatePost = () => {
           console.log('Focus.', editor)
         } }
       />
+      <input type="text" placeholder="Tags" id="tagInput"/>
+      <br/>
       <SubmitButton/>
     </div>
   )
@@ -45,5 +50,7 @@ const SubmitButton = (props) => (
 )
 
 function getData () {
+  console.log('Author: ' + document.getElementById('authorInput').value)
+  console.log(document.getElementById('titleInput').value)
   console.log(editor2.getData())
 }
