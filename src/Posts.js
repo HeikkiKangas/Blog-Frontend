@@ -1,6 +1,8 @@
 import React from 'react'
 import './posts.css'
 import {SideBar} from "./SideBar";
+import Button from "@material-ui/core/Button";
+import {Link} from "react-router-dom";
 
 export const Posts = () => {
   const [posts, setPosts] = React.useState(null)
@@ -29,6 +31,8 @@ export const Posts = () => {
 
 const Post = (props) => (
   <div className='post'>
+    <EditButton id={props.post.id}/>
+    <DeleteButton id={props.post.id}/>
     <h1 className='title'>{props.post.title}</h1>
     <h3 className='author'>{props.post.author.userName}</h3>
     {props.post.author.admin ? <p className='authorIsAdmin'>Admin user</p> : null}
@@ -43,3 +47,32 @@ const Post = (props) => (
 const Comments = (props) => <a id='commentCount' href='localhost:3000'>{props.count} Comments</a>
 const Likes = (props) => <a id='likeCount' href='localhost:3000'>{props.count} Likes</a>
 const Tags = (props) => <div id='tags'>{props.post.tags.map(tag => <a href='localhost:3000' key={props.post.id}>{tag}</a>)}</div>
+
+const EditButton = (props) => (
+  <Button
+    id={'editButton'}
+    variant={'contained'}
+    fullWidth={false}
+    color={'secondary'}
+    component={Link} to={'/editpost/' + props.id}>
+    Edit
+  </Button>
+)
+
+const deletePost = (id) => {
+  console.log('Do you want to delete post ' + id)
+  fetch('http://localhost:8080/api/posts/' + id, { method: 'delete' })
+    .then(console.log)
+    .catch(console.log)
+}
+
+const DeleteButton = (props) => (
+  <Button
+    id={'deleteButton'}
+    variant={'contained'}
+    fullWidth={false}
+    color={'secondary'}
+    onClick={() => deletePost(props.id)}>
+    Delete
+  </Button>
+)
