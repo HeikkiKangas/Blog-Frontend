@@ -3,25 +3,37 @@ import React from 'react'
 import './posts.css'
 import { SideBar } from './SideBar'
 import { Link } from 'react-router-dom'
-import { Button, Dialog, DialogActions, DialogTitle, Slide, Snackbar } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogTitle} from '@material-ui/core'
 
-export const Posts = () => {
+export const Posts = ({ snackbarState, setSnackbarState }) => {
   const [posts, setPosts] = React.useState(null)
-  const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
+
+  const fetchPosts = () => fetch('http://localhost:8080/api/posts')
+    .then(response => response.json())
+    .then(json => {
+      setPosts(json)
+      console.log(json)
+    })
+    .catch(console.log)
 
   React.useEffect(() => {
-    console.log('fetching')
-    fetch('http://localhost:8080/api/posts')
-      .then(response => response.json())
-      .then(json => {
-        setPosts(json)
-        console.log(json)
-      })
-      .catch(console.log)
+    console.log('componentDidMount, fetching')
+    fetchPosts().then(console.log('posts fetched'))
   }, [])
 
   return (
     <div>
+      <div id='generatePostsButton'>
+        <Button
+          id='generatePostsButton'
+          variant='contained'
+          fullWidth={false}
+          color={'secondary'}
+          onClick={() => fetch('http://localhost:8080/api/generateposts').then(fetchPosts)}
+          component={Link} to='/'>
+          Generate Random Posts
+        </Button>
+      </div>
       <div id='posts'>
         { posts == null ? <p id='loadingMsg'>Loading posts.</p>
           : posts.map(post =>
@@ -35,12 +47,6 @@ export const Posts = () => {
           )}
       </div>
       <SideBar />
-      <Snackbar
-        open={snackbarState.open}
-        onClose={() => setSnackbarState({ ...snackbarState, open: false })}
-        TransitionComponent={Slide}
-        message={snackbarState.text}
-        autoHideDuration={2000}/>
     </div>
   )
 }
@@ -86,10 +92,11 @@ const DeleteButton = (props) => {
     console.log('Deleting post id:' + post.id)
     const response = await fetch('http://localhost:8080/api/posts/' + post.id, { method: 'delete' })
       .catch(console.log)
-    let newState = { open: true, text: `Could not delete ${post.title}.` }
+
+    const newState = { open: true, text: `Could not delete ${post.title}.` }
     if (response.ok) {
       setPosts(posts.filter(p => p.id !== post.id))
-      newState = { ...newState, text: `${post.title} deleted.` }
+      newState.text = `${post.title} deleted.`
     }
     setSnackbarState(newState)
   }
