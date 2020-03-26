@@ -3,18 +3,10 @@ import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
 import './topbar.css'
-import InputBase from '@material-ui/core/InputBase'
 export const TopBar = (props) => {
   return (
     <div id={'topBar'}>
       <CreatePostButton/>
-      {/*
-      <InputBase
-        id="searchBar"
-        type="text"
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
-      /> */}
       <input id="searchBar" type="text" placeholder="Search.."></input>
       <LoginButton loggedIn={false}/>
     </div>
