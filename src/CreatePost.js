@@ -2,7 +2,7 @@ import React from 'react'
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Button from '@material-ui/core/Button'
-import './createPost.css'
+import './editPost.css'
 
 let editor2 = null
 

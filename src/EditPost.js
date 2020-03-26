@@ -3,6 +3,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import { Link, Redirect, useParams } from 'react-router-dom'
+import './editPost.css'
 
 export const EditPost = (props) => {
   const [post, setPost] = React.useState(undefined)
@@ -94,9 +95,6 @@ const Editor = ({ post, setRedirect }) => (
       onChange={event => post.title = event.target.value}/>
 
     <br/>
-    <input
-      type="text" placeholder="Author" id="authorInput"
-      defaultValue={post.author.userName ? post.author.userName : ''} onChange={a => { post.author.username = a }}/>
 
     <CKEditor
       editor={ClassicEditor}

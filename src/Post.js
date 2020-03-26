@@ -11,7 +11,6 @@ export const Post = (props) => {
       <DeleteButton {...props} />
       <h1 className='title'>{post.title}</h1>
       <h3 className='author'>{post.author.userName}</h3>
-      {post.author.admin ? <p className='authorIsAdmin'>Admin user</p> : null}
       <p className='timestamp'>{post.timestamp}</p>
       <div className='text' dangerouslySetInnerHTML={{ __html: post.text }} />
       <Comments count={post.comments.length}/>
