@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export const Post = (props) => {
   const { post } = props
   return (
-    <div className='post'>
+    <div className='post' id='post'>
       <EditButton id={post.id}/>
       <DeleteButton {...props} />
       <h1 className='title'>{post.title}</h1>
