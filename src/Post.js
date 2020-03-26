@@ -13,7 +13,7 @@ export const Post = (props) => {
       <h3 className='author'>{post.author.userName}</h3>
       {post.author.admin ? <p className='authorIsAdmin'>Admin user</p> : null}
       <p className='timestamp'>{post.timestamp}</p>
-      <p className='text'>{post.text}</p>
+      <div className='text' dangerouslySetInnerHTML={{ __html: post.text }} />
       <Comments count={post.comments.length}/>
       <Likes count={post.likes.length}/>
       <Tags tags={post.tags}/>
@@ -45,31 +45,35 @@ const DeleteButton = (props) => {
   console.log(props)
   return (
     <>
-      <Button
-        className='deleteButton'
-        variant='contained'
-        fullWidth={false}
-        color='secondary'
-        startIcon={<Icon>delete</Icon>}
-        onClick={() => setOpen(true)}/>
-      <Tooltip title='Delete'>
+      <Tooltip title='Delete post'>
+        <Button
+          className='deleteButton'
+          variant='contained'
+          fullWidth={false}
+          color='secondary'
+          startIcon={<Icon>delete</Icon>}
+          onClick={() => setOpen(true)}>
+          Delete
+        </Button>
+      </Tooltip>
+      <Tooltip title='Delete post'>
         <IconButton
           className='deleteIcon'
-          color='primary'>
+          color='secondary'>
           <Icon>delete</Icon>
         </IconButton>
       </Tooltip>
       <Tooltip title='Edit post'>
         <IconButton
           className='editIcon'
-          color='primary'>
+          color='secondary'>
           <Icon>edit</Icon>
         </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle id='delete-dialog-title'>{`Delete post "${props.post.title}"?`}</DialogTitle>
         <DialogActions>
-          <Button class variant='contained' color='secondary' onClick={handleCloseDialog}>
+          <Button variant='contained' color='secondary' onClick={handleCloseDialog}>
                         Cancel
           </Button>
           <Button variant='contained' color='secondary' onClick={() => deletePost(props)}>
@@ -88,5 +92,7 @@ const EditButton = (props) => (
     fullWidth={false}
     color={'secondary'}
     startIcon={<Icon>edit</Icon>}
-    component={Link} to={'/editpost/' + props.id}/>
+    component={Link} to={'/editpost/' + props.id}>
+    Edit
+  </Button>
 )
