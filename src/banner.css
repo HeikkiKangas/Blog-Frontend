@@ -1,12 +1,31 @@
 #banner {
-    padding: 10px;
+    padding: 5px;
     margin: 5px;
     text-align: center;
     background: #AC6D86;
     color: white;
-    font-family: "Lobster", "Segoe Print", "Comic Sans MS";
-    font-size: 30px;
+    font-family: "Alessandria", "Courier New", "Comic Sans MS";
+    font-size: 20px;
 }
+
+/*
+@font-face {
+    font-family: 'CinnamonSticks';
+    src: local('CinnamonSticks'), url(./fonts/CinnamonSticks.ttf) format('truetype');
+}
+*/
+
+@font-face {
+    font-family: 'Alessandria';
+    src: local('Alessandria'), url(./fonts/Alessandria.ttf) format('truetype');
+}
+
+/*
+@font-face {
+    font-family: 'PinkScript';
+    src: local('PinkScript'), url(./fonts/PinkScript.otf) format('opentype');
+}
+*/
 
 #bannerLink {
     outline: none;
