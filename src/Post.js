@@ -2,6 +2,7 @@
 import React from 'react'
 import { Button, Dialog, DialogActions, DialogTitle, Icon, IconButton, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { CommentBox } from './Comment'
 
 export const Post = (props) => {
   const { post } = props
@@ -16,6 +17,7 @@ export const Post = (props) => {
       <Comments count={post.comments.length}/>
       <Likes count={post.likes.length}/>
       <Tags tags={post.tags}/>
+      <CommentBox/>
     </div>
   )
 }
