@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // Form for user to fill in name and comment -- works perfectly fine
 const CommentForm = (props) => {
@@ -9,6 +9,7 @@ const CommentForm = (props) => {
     event.preventDefault()
     console.log(author + ' : ' + comment)
     props.addComment(author, comment)
+    // clear author and comment
   }
 
   const handleNameInput = e => {
@@ -22,8 +23,8 @@ const CommentForm = (props) => {
   return (
     <form className="comment-form" onSubmit={handleSubmit}>
       <div className="comment-form-fields">
-        <input placeholder="Name" required value={author} onChange={handleNameInput}></input><br />
-        <textarea placeholder="Comment" rows="4" required value={comment} onChange={handleCommentInput} ></textarea>
+        <input placeholder="Name" required value={author} onChange={handleNameInput}/><br />
+        <textarea placeholder="Comment" rows="4" required value={comment} onChange={handleCommentInput} />
       </div>
       <div className="comment-form-actions">
         <button type="submit">Post Comment</button>
@@ -42,10 +43,12 @@ const Comment = (props) => (
 
 // The whole comment section
 export const CommentBox = (props) => {
-  let comments = [{ id: 1, author: 'landiggity', body: "This is my first comment on this forum so don't be a dick" }]
+  const comments = [{ id: 1, author: 'landiggity', body: "This is my first comment on this forum so don't be a dick" }]
+
+  const [allcomments, setComments] = useState(comments)
 
   const getComments = () => {
-    return comments.map((comment) => {
+    return allcomments.map((comment, index) => {
       return (
         <Comment
           author={comment.author}
@@ -56,18 +59,16 @@ export const CommentBox = (props) => {
     })
   }
 
-  const allComments = getComments()
-
   const addComment = (author, body) => {
     const comment = {
-      id: comments.length + 1,
+      id: allcomments.length + 1,
       author,
       body
     }
-    comments = comments.concat([comment])
+    setComments(allcomments.concat(comment))
 
-    console.log(comments.length)
-    for (const comment of comments) {
+    console.log(allcomments.length)
+    for (const comment of allcomments) {
       console.log(comment)
     }
   }
@@ -76,15 +77,7 @@ export const CommentBox = (props) => {
     <div className="comment-box">
       <h3>Comments</h3>
       <CommentForm addComment={addComment}/>
-      <div>{comments.map((comment) => { // Doesn't update
-        return (
-          <Comment
-            author={comment.author}
-            body={comment.body}
-            key={comment.id}
-          />
-        )
-      })}</div>
+      <div>{getComments()}</div>
     </div>
   )
 }
