@@ -35,12 +35,12 @@ const CommentForm = (props) => {
 // Individual comment
 const Comment = (props) => (
   <div className="comment">
-    <p className="comment-header">{this.props.author}</p>
-    <p className="comment-body">{this.props.body}</p>
+    <p className="comment-header">{props.author}</p>
+    <p className="comment-body">{props.body}</p>
   </div>
 )
 
-// The whole comment section -- post comment button is the only good thing here, otherwise absolutely does not work
+// The whole comment section
 export const CommentBox = (props) => {
   let comments = [{ id: 1, author: 'landiggity', body: "This is my first comment on this forum so don't be a dick" }]
 
@@ -58,21 +58,33 @@ export const CommentBox = (props) => {
 
   const allComments = getComments()
 
-  const addComment = ({ author, body }) => {
+  const addComment = (author, body) => {
     const comment = {
       id: comments.length + 1,
-      author, // undefined
-      body // undefined
+      author,
+      body
     }
     comments = comments.concat([comment])
 
     console.log(comments.length)
+    for (const comment of comments) {
+      console.log(comment)
+    }
   }
 
   return (
     <div className="comment-box">
       <h3>Comments</h3>
       <CommentForm addComment={addComment}/>
+      <div>{comments.map((comment) => { // Doesn't update
+        return (
+          <Comment
+            author={comment.author}
+            body={comment.body}
+            key={comment.id}
+          />
+        )
+      })}</div>
     </div>
   )
 }
