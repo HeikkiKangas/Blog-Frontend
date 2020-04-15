@@ -99,6 +99,7 @@ const Editor = ({ post, setRedirect }) => (
     <CKEditor
       editor={ClassicEditor}
       onInit={editor => {
+        editor.data.processor = new GFMDataProcessor(editor.editing.view.document)
         editor.setData(post.text ? post.text : 'Dear Diary, ')
         if (!post.id) {
           post.likes = []
