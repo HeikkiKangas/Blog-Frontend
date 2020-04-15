@@ -3,6 +3,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import { Link, Redirect, useParams } from 'react-router-dom'
+// import GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor';
 import './editPost.css'
 
 export const EditPost = (props) => {
@@ -99,7 +100,7 @@ const Editor = ({ post, setRedirect }) => (
     <CKEditor
       editor={ClassicEditor}
       onInit={editor => {
-        editor.data.processor = new GFMDataProcessor(editor.editing.view.document)
+        // editor.data.processor = new GFMDataProcessor(editor.editing.view.document)
         editor.setData(post.text ? post.text : 'Dear Diary, ')
         if (!post.id) {
           post.likes = []
