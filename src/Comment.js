@@ -43,7 +43,8 @@ const Comment = (props) => (
 
 // The whole comment section
 export const CommentBox = (props) => {
-  const comments = [{ id: 1, author: 'landiggity', body: "This is my first comment on this forum so don't be a dick" }]
+  const comments = []
+  // esim. { id: 1, author: 'landiggity', body: "This is my first comment on this forum so don't be a dick" }
 
   const [allcomments, setComments] = useState(comments)
 
