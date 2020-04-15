@@ -17,7 +17,7 @@ export const Post = (props) => {
       <Comments count={post.comments.length}/>
       <Likes count={post.likes.length}/>
       <Tags tags={post.tags}/>
-      <CommentBox/>
+      <CommentBox id={post.id}/>
     </div>
   )
 }

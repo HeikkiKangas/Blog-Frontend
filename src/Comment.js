@@ -47,6 +47,8 @@ export const CommentBox = (props) => {
 
   const [allcomments, setComments] = useState(comments)
 
+  const post = props.id
+
   const getComments = () => {
     return allcomments.map((comment, index) => {
       return (
@@ -54,6 +56,7 @@ export const CommentBox = (props) => {
           author={comment.author}
           body={comment.body}
           key={comment.id}
+          post={comment.post}
         />
       )
     })
@@ -63,8 +66,10 @@ export const CommentBox = (props) => {
     const comment = {
       id: allcomments.length + 1,
       author,
-      body
+      body,
+      post
     }
+    console.log('post id ' + post)
     setComments(allcomments.concat(comment))
 
     console.log(allcomments.length)
