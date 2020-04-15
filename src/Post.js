@@ -15,7 +15,7 @@ export const Post = (props) => {
       <p className='timestamp'>{post.timestamp}</p>
       <div className='text' dangerouslySetInnerHTML={{ __html: post.text }} />
       <Comments count={post.comments.length}/>
-      <Likes count={post.likes.length}/>
+      <Likes count={post.likes}/>
       <Tags tags={post.tags}/>
       <CommentBox id={post.id}/>
     </div>

@@ -103,7 +103,7 @@ const Editor = ({ post, setRedirect }) => (
         // editor.data.processor = new GFMDataProcessor(editor.editing.view.document)
         editor.setData(post.text ? post.text : 'Dear Diary, ')
         if (!post.id) {
-          post.likes = []
+          post.likes = 0
           post.comments = []
         }
         console.log('Editor is ready to use!')
@@ -111,14 +111,6 @@ const Editor = ({ post, setRedirect }) => (
       onChange={(event, editor) => {
         post.text = editor.getData()
       }}
-      /*
-      onBlur={(event, editor) => {
-        console.log('Blur.', editor)
-      }}
-      onFocus={(event, editor) => {
-        console.log('Focus.', editor)
-      }}
-      */
     />
     <input type="text" placeholder="Tags" id="tagInput" defaultValue={post.tags}/>
     <br/>
