@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import { Button, TextField } from '@material-ui/core'
 
 // Form for user to fill in name and comment -- works perfectly fine
 const CommentForm = (props) => {
@@ -9,6 +11,8 @@ const CommentForm = (props) => {
     event.preventDefault()
     console.log(author + ' : ' + comment)
     props.addComment(author, comment)
+    author = ''
+    comment = ''
     // clear author and comment
   }
 
@@ -28,62 +32,91 @@ const CommentForm = (props) => {
       </div>
       <div className="comment-form-actions">
         <button type="submit">Post Comment</button>
+        <Button
+          type='submit'
+          color='secondary'
+          variant='contained'>
+          Post Comment
+        </Button>
       </div>
     </form>
   )
 }
 
 // Individual comment
-const Comment = (props) => (
+// Format timestamp
+const Comment = ({ comment, admin }) =>
   <div className="comment">
-    <p className="comment-header">{props.author}</p>
-    <p className="comment-body">{props.body}</p>
+    <p className="comment-header">{comment.author}</p>
+    <p className='comment-timestamp'>{new Date(comment.timestamp).toLocaleString()}</p>
+    <p className="comment-body">{comment.text}</p>
+    {admin ? null : <Button>Delete Comment</Button>}
   </div>
-)
+
+const Comments = ({ comments }) =>
+  <div className='comments'>
+    {comments.map((comment, index) => <Comment comment={comment} key={comment.id} />)}
+  </div>
+
+const Form = ({ addComment }) => {
+  const [newComment, setNewComment] = useState({ author: '', text: '' })
+  return (
+    <form className='commentForm' autoComplete='off' onSubmit={(e) => {
+      e.preventDefault()
+      addComment(newComment, setNewComment)
+    }}>
+      <TextField name='authorField' required value={newComment.author} onChange={e => setNewComment({ author: e.target.value, text: newComment.text }) } variant='outlined' label='Author' />
+      <div>
+        <TextField
+          name='textField'
+          required value={newComment.text} onChange={e => setNewComment({ text: e.target.value, author: newComment.author })}
+          variant='outlined' label='Comment' rows={4} multiline fullWidth/>
+      </div>
+      <Button type='submit' color='secondary' variant='contained'>Post Comment</Button>
+    </form>
+  )
+}
 
 // The whole comment section
 export const CommentBox = (props) => {
-  const comments = []
-  // esim. { id: 1, author: 'landiggity', body: "This is my first comment on this forum so don't be a dick" }
+  const [comments, setComments] = useState(props.comments)
+  const [visible, setVisible] = useState(false)
 
-  const [allcomments, setComments] = useState(comments)
+  const addComment = (newComment, setNewComment) => {
+    console.log('post id ' + props.postID)
+    fetch(
+      `http://localhost:8080/api/posts/${props.postID}/comment`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newComment)
+      })
+      .then(response => response.json())
+      .then(c => setComments(comments.concat(c)))
 
-  const post = props.id
-
-  const getComments = () => {
-    return allcomments.map((comment, index) => {
-      return (
-        <Comment
-          author={comment.author}
-          body={comment.body}
-          key={comment.id}
-          post={comment.post}
-        />
-      )
-    })
-  }
-
-  const addComment = (author, body) => {
-    const comment = {
-      id: allcomments.length + 1,
-      author,
-      body,
-      post
-    }
-    console.log('post id ' + post)
-    setComments(allcomments.concat(comment))
-
-    console.log(allcomments.length)
-    for (const comment of allcomments) {
-      console.log(comment)
-    }
+    setNewComment({ author: '', text: '' })
+    console.log(comments.length)
+    comments.forEach(console.log)
   }
 
   return (
     <div className="comment-box">
-      <h3>Comments</h3>
-      <CommentForm addComment={addComment}/>
-      <div>{getComments()}</div>
+      <a href="#" onClick={(e) => {
+        e.preventDefault()
+        setVisible(!visible)
+      }}>
+        {visible ? 'Hide comments' : `Show ${comments.length} comments`}
+      </a>
+      { visible
+        ? <>
+          <h3>Comments</h3>
+          <Comments comments={comments}/>
+          <Form addComment={addComment}/>
+        </>
+        : null }
+      {/* <CommentForm addComment={addComment}/> */}
     </div>
   )
 }
