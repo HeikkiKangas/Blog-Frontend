@@ -7,6 +7,7 @@ import { CommentBox } from './Comment'
 export const Post = (props) => {
   const [post, setPost] = React.useState(props.post)
   const [open, setOpen] = React.useState(false)
+  const text = open ? post.text : post.text.substring(0, 350) + '...'
   return (
     <div className='post' id='post'>
       <EditButton id={post.id}/>
@@ -14,10 +15,13 @@ export const Post = (props) => {
       <h1 className='title'>{post.title}</h1>
       <h3 className='author'>{post.author.userName}</h3>
       <p className='timestamp'>{new Date(post.timestamp).toLocaleString()}</p>
-      <div className='text' dangerouslySetInnerHTML={{ __html: post.text }} />
-      <Likes post={post} setPost={setPost}/>
-      <Tags tags={post.tags}/>
-      <CommentBox postID={post.id} comments={post.comments}/>
+      <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
+      <Button onClick={() => setOpen(!open)}>{ open ? 'Sulkje' : 'Lue lissää'}</Button>
+      <div>
+        <Likes post={post} setPost={setPost}/>
+        <Tags tags={post.tags}/>
+        <CommentBox postID={post.id} comments={post.comments}/>
+      </div>
     </div>
   )
 }
