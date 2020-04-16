@@ -15,23 +15,9 @@ export const TopBar = (props) => {
   )
 }
 
-const SearchBar = () => {
+const SearchBar = ({ posts }) => {
+  console.log(posts)
   /*
-  return (
-    <div style={{ width: 300 }}>
-      <Autocomplete
-        id="searchbar"
-        Search
-        // options={top100Films.map((option) => option.title)}
-        renderInput={(params) => (
-          <TextField {...params} label="searchbar" margin="normal" variant="outlined" />
-        )}/>
-    </div>
-  )
-
-   */
-
-
   const handleChange = (e) => {
     console.log(e.target.value)
     const object = document.getElementById('post')
@@ -45,20 +31,32 @@ const SearchBar = () => {
       console.log("the div text doesn't contain search text")
     }
   }
-
+  */
   return (
-    <input type="text" id={'searchBar'} className="input" onChange={handleChange} placeholder="Search..." />
+    <Autocomplete
+      style={{ width: 300 }}
+      id="searchbar"
+      freeSolo
+      options={posts !== undefined ? posts.map(p => p.title) : []}
+      autoComplete={true}
+      openOnFocus={false}
+      renderInput={(params) => (
+        <TextField {...params} label="Search posts" margin="normal" variant="outlined" />
+      )}/>
   )
-
-  
+  /*
+    return (
+      <input type="text" id={'searchBar'} className="input" onChange={handleChange} placeholder="Search..." />
+    )
+  */
 }
 
 const CreatePostButton = (props) => (
   <Button
-    id={'createButton'}
-    variant={'contained'}
+    id='createButton'
+    variant='contained'
     fullWidth={false}
-    color={'secondary'}
+    color='secondary'
     component={Link} to="/createpost/">
     Create blog post
   </Button>
@@ -66,10 +64,10 @@ const CreatePostButton = (props) => (
 
 const LoginButton = (props) => (
   <Button
-    id={'loginButton'}
-    variant={'contained'}
+    id='loginButton'
+    variant='contained'
     fullWidth={false}
-    color={'secondary'}
+    color='secondary'
     startIcon={<Icon>person</Icon>}>
     {props.loggedIn ? 'Logout' : 'Login'}
   </Button>
