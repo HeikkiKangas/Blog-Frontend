@@ -8,6 +8,8 @@ import { Post } from './Post'
 
 export const Posts = ({ snackbarState, setSnackbarState }) => {
   const [posts, setPosts] = React.useState([])
+  const storedRecentlyViewed = window.localStorage.getItem('recentlyViewed')
+  const [recentlyViewed, setRecentlyViewed] = React.useState(storedRecentlyViewed || [])
 
   const fetchPosts = () => fetch('http://localhost:8080/api/posts')
     .then(response => response.json())
@@ -36,7 +38,7 @@ export const Posts = ({ snackbarState, setSnackbarState }) => {
         </Button>
       </div>
       <div id='posts'>
-        { posts == null ? <p id='loadingMsg'>Loading posts.</p>
+        { posts === null ? <p id='loadingMsg'>Loading posts.</p>
           : posts.map(post =>
             <Post
               post={post}
@@ -44,10 +46,13 @@ export const Posts = ({ snackbarState, setSnackbarState }) => {
               setPosts={setPosts}
               key={post.id}
               snackbarState={snackbarState}
-              setSnackbarState={setSnackbarState}/>
+              setSnackbarState={setSnackbarState}
+              recentlyViewed={recentlyViewed}
+              setRecentlyViewed={setRecentlyViewed}/>
           )}
       </div>
-      <SideBar />
+      <SideBar
+        recentlyViewed={recentlyViewed}/>
     </div>
   )
 }
