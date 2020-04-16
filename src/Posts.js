@@ -26,17 +26,6 @@ export const Posts = ({ snackbarState, setSnackbarState }) => {
 
   return (
     <div>
-      <div id='generatePostsButtonDiv'>
-        <Button
-          id='generatePostsButton'
-          variant='contained'
-          fullWidth={false}
-          color={'secondary'}
-          onClick={() => fetch('http://localhost:8080/api/generateposts').then(fetchPosts)}
-          component={Link} to='/'>
-          Generate Random Posts
-        </Button>
-      </div>
       <div id='posts'>
         { posts === null ? <p id='loadingMsg'>Loading posts.</p>
           : posts.map(post =>
