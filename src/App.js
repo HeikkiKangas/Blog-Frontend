@@ -9,16 +9,30 @@ import { EditPost } from './EditPost'
 
 export const App = () => {
   const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
+  const [posts, setPosts] = React.useState([])
+
+  const fetchPosts = () => fetch('http://localhost:8080/api/posts')
+    .then(response => response.json())
+    .then(json => {
+      setPosts(json)
+      console.log(json)
+    })
+    .catch(console.log)
+
+  React.useEffect(() => {
+    console.log('componentDidMount, fetching')
+    fetchPosts().then(console.log('posts fetched'))
+  }, [])
 
   return (
     <BrowserRouter>
       <div>
         <Banner title={'Pöhinää ja pastellivärejä'}/>
-        <TopBar />
+        <TopBar posts={posts}/>
         <Route
           exact={true}
           path={'/'}
-          render={() => <Posts setSnackbarState={setSnackbarState}/>}/>
+          render={() => <Posts setSnackbarState={setSnackbarState} posts={posts} setPosts={setPosts}/>}/>
 
         <Route
           path={'/createpost'}
