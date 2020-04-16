@@ -5,25 +5,36 @@ import { Link } from 'react-router-dom'
 import { CommentBox } from './Comment'
 
 export const Post = (props) => {
-  const { post } = props
+  const [post, setPost] = React.useState(props.post)
+  const [open, setOpen] = React.useState(false)
   return (
     <div className='post' id='post'>
       <EditButton id={post.id}/>
       <DeleteButton {...props} />
       <h1 className='title'>{post.title}</h1>
       <h3 className='author'>{post.author.userName}</h3>
-      <p className='timestamp'>{post.timestamp}</p>
+      <p className='timestamp'>{new Date(post.timestamp).toLocaleString()}</p>
       <div className='text' dangerouslySetInnerHTML={{ __html: post.text }} />
-      <Comments count={post.comments.length}/>
-      <Likes count={post.likes}/>
+      <Likes post={post} setPost={setPost}/>
       <Tags tags={post.tags}/>
-      <CommentBox id={post.id}/>
+      <CommentBox postID={post.id} comments={post.comments}/>
     </div>
   )
 }
 
-const Comments = ({ count }) => <a id='commentCount' href='localhost:3000'>{count} Comments</a>
-const Likes = ({ count }) => <a id='likeCount' href='localhost:3000'>{count} Likes</a>
+const Likes = ({ post, setPost }) =>
+  <a
+    id='likeCount'
+    href='#'
+    onClick={(e) => {
+      e.preventDefault()
+      fetch(`http://localhost:8080/api/posts/${post.id}/like`, { method: 'POST' })
+        .then(response => response.json())
+        .then(json => setPost({ ...post, likes: json.likes }))
+    }}>
+    {post.likes} people like this.
+  </a>
+
 const Tags = ({ tags }) => <div id='tags'>{tags.map(tag => <a href='localhost:3000' key={tag}>{tag}</a>)}</div>
 
 const DeleteButton = (props) => {
@@ -43,7 +54,6 @@ const DeleteButton = (props) => {
     setSnackbarState(newState)
   }
 
-  console.log(props)
   return (
     <>
       <Tooltip title='Delete post'>
