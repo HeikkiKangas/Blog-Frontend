@@ -74,20 +74,6 @@ const DeleteButton = (props) => {
           Delete
         </Button>
       </Tooltip>
-      <Tooltip title='Delete post'>
-        <IconButton
-          className='deleteIcon'
-          color='secondary'>
-          <Icon>delete</Icon>
-        </IconButton>
-      </Tooltip>
-      <Tooltip title='Edit post'>
-        <IconButton
-          className='editIcon'
-          color='secondary'>
-          <Icon>edit</Icon>
-        </IconButton>
-      </Tooltip>
       <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle id='delete-dialog-title'>{`Delete post "${props.post.title}"?`}</DialogTitle>
         <DialogActions>
