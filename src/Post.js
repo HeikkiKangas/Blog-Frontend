@@ -19,7 +19,7 @@ export const Post = (props) => {
       <Button onClick={() => {
         setOpen(!open)
         if (!props.recentlyViewed.includes(post)) props.setRecentlyViewed(props.recentlyViewed.concat(post))
-      }}>{ open ? 'Sulkje' : 'Lue lissää'}</Button>
+      }}>{ open ? 'Close post' : 'Read post'}</Button>
       <div>
         <Likes post={post} setPost={setPost}/>
         <Tags tags={post.tags}/>
@@ -39,7 +39,7 @@ const Likes = ({ post, setPost }) =>
         .then(response => response.json())
         .then(json => setPost({ ...post, likes: json.likes }))
     }}>
-    {post.likes} people like this.
+    {post.likes} people like this
   </a>
 
 const Tags = ({ tags }) => <div id='tags'>{tags.map(tag => <a href='localhost:3000' key={tag}>{tag}</a>)}</div>
