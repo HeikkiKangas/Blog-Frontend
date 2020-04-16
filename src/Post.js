@@ -16,7 +16,10 @@ export const Post = (props) => {
       <h3 className='author'>{post.author.userName}</h3>
       <p className='timestamp'>{new Date(post.timestamp).toLocaleString()}</p>
       <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
-      <Button onClick={() => setOpen(!open)}>{ open ? 'Sulkje' : 'Lue lissää'}</Button>
+      <Button onClick={() => {
+        setOpen(!open)
+        if (!props.recentlyViewed.includes(post)) props.setRecentlyViewed(props.recentlyViewed.concat(post))
+      }}>{ open ? 'Sulkje' : 'Lue lissää'}</Button>
       <div>
         <Likes post={post} setPost={setPost}/>
         <Tags tags={post.tags}/>
