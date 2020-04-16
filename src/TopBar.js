@@ -2,9 +2,9 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import { Link } from 'react-router-dom'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import './topbar.css'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import TextField from '@material-ui/core/TextField'
 export const TopBar = (props) => {
   return (
     <div id={'topBar'}>
@@ -16,6 +16,7 @@ export const TopBar = (props) => {
 }
 
 const SearchBar = () => {
+  /*
   return (
     <div style={{ width: 300 }}>
       <Autocomplete
@@ -24,11 +25,13 @@ const SearchBar = () => {
         // options={top100Films.map((option) => option.title)}
         renderInput={(params) => (
           <TextField {...params} label="searchbar" margin="normal" variant="outlined" />
-        )}
-      />
+        )}/>
     </div>
   )
-  /*
+
+   */
+
+
   const handleChange = (e) => {
     console.log(e.target.value)
     const object = document.getElementById('post')
@@ -47,7 +50,7 @@ const SearchBar = () => {
     <input type="text" id={'searchBar'} className="input" onChange={handleChange} placeholder="Search..." />
   )
 
-   */
+  
 }
 
 const CreatePostButton = (props) => (
