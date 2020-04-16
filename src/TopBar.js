@@ -20,7 +20,7 @@ const SearchBar = () => {
     <div style={{ width: 300 }}>
       <Autocomplete
         id="searchbar"
-        freeSolo
+        Search
         // options={top100Films.map((option) => option.title)}
         renderInput={(params) => (
           <TextField {...params} label="searchbar" margin="normal" variant="outlined" />
