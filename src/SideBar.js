@@ -8,7 +8,13 @@ export const SideBar = (props) => (
     <ul>
       {props.recentlyViewed.length === 0
         ? <li>You haven&apos;t viewed anything yet.</li>
-        : props.recentlyViewed.map((post, index) => <li key={index}>{post.title}</li>)}
+        : props.recentlyViewed.map((post, index) =>
+          <li key={index}>
+            <a href={'/#post' + post.id}>
+              {post.title}
+            </a>
+          </li>
+        )}
     </ul>
   </div>
 )
