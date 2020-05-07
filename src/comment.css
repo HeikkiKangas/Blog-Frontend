@@ -6,3 +6,23 @@ a:link#comments {
 p.comment-body {
     word-wrap: break-word;
 }
+
+.comment {
+    border-style: dotted;
+    margin: 5px;
+}
+
+p.comment-header {
+    margin: 2px 8px 2px 8px;
+}
+
+p.comment-timestamp {
+    margin: 2px 8px 2px 8px;
+}
+p.comment-body {
+    margin: 8px;
+}
+
+.formStyle {
+    margin: 10px 0px 10px 0px;
+}

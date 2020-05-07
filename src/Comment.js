@@ -43,7 +43,7 @@ const Form = ({ addComment }) => {
       addComment(newComment, setNewComment)
     }}>
       <TextField name='authorField' required value={newComment.author} onChange={e => setNewComment({ author: e.target.value, text: newComment.text }) } variant='outlined' label='Author' />
-      <div>
+      <div className='formStyle'>
         <TextField
           name='textField'
           required value={newComment.text} onChange={e => setNewComment({ text: e.target.value, author: newComment.author })}
