@@ -6,6 +6,22 @@ import { Link } from 'react-router-dom'
 import './topbar.css'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+  inputRoot: {
+    color: 'pink',
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'pink'
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'pink'
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'pink'
+    }
+  }
+}))
 
 export const TopBar = (props) => {
   return (
@@ -17,6 +33,7 @@ export const TopBar = (props) => {
 }
 
 const SearchBar = ({ posts }) => {
+  const classes = useStyles()
   console.log('TopBar')
   console.log(posts)
 
@@ -28,6 +45,7 @@ const SearchBar = ({ posts }) => {
       }}>
       <Autocomplete
         id="searchBar"
+        classes={classes}
         options={posts === undefined ? [] : posts.map(p => p.title)}
         autoComplete={true}
         openOnFocus={false}
