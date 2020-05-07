@@ -20,7 +20,7 @@ const SearchBar = ({ posts }) => {
   console.log('TopBar')
   console.log(posts)
   let search
-  let postId
+  const [postId, setPostId] = React.useState(null)
 
   return (
     <form
@@ -36,15 +36,11 @@ const SearchBar = ({ posts }) => {
         openOnFocus={false}
         onChange={e => {
           console.log(posts[(Number(e.target.dataset.optionIndex))])
-          postId = posts[(Number(e.target.dataset.optionIndex))].id
+          setPostId(posts[(Number(e.target.dataset.optionIndex))].id)
           console.log(postId)
         }}
         renderInput={(params) => (
           <TextField
-            onChange={e => {
-              search = e.target.value
-              console.log(search)
-            }}
             {...params}
             label="Search posts"
             margin="normal"
@@ -55,7 +51,7 @@ const SearchBar = ({ posts }) => {
       <Button
         variant='contained'
         color='secondary'
-        type='submit'>
+        component={Link} to={'#post' + postId}>
         Search
       </Button>
     </form>
