@@ -6,15 +6,18 @@ import './comment.css'
 
 // Individual comment
 // Format timestamp
-const Comment = ({ comment, admin, postId, comments, setComments }) => {
-  // const [comment, setComment] = React.useState(props.comment)
+const Comment = ({ admin, postId, comments, setComments, ...props }) => {
+  const [comment, setComment] = React.useState(props.comment)
   return (
     <div className="comment">
       <p className="comment-header">{comment.author}</p>
       <p className='comment-timestamp'>{new Date(comment.timestamp).toLocaleString()}</p>
       <p className="comment-body">{comment.text}</p>
-      <Button>
-      Like
+      <Button
+        onClick={() => fetch(`${API_URL}/posts/${postId}/comment/${comment.id}/like`, { method: 'POST' })
+          .then(response => response.json())
+          .then(json => setComment({ ...comment, likes: json.likes }))}>
+        {`${comment.likes} Likes`}
       </Button>
       <Button onClick={async () => {
         const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
