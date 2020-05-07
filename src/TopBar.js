@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import './topbar.css'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
+
 export const TopBar = (props) => {
   return (
     <div id={'topBar'}>
@@ -20,6 +21,7 @@ const SearchBar = ({ posts }) => {
   console.log('TopBar')
   console.log(posts)
   let search
+  let postId
 
   return (
     <form
@@ -33,7 +35,11 @@ const SearchBar = ({ posts }) => {
         options={posts === undefined ? [] : posts.map(p => p.title)}
         autoComplete={true}
         openOnFocus={false}
-        onChange={(e) => console.log(posts[(Number(e.target.dataset.optionIndex))])}
+        onChange={e => {
+          console.log(posts[(Number(e.target.dataset.optionIndex))])
+          postId = posts[(Number(e.target.dataset.optionIndex))].id
+          console.log(postId)
+        }}
         renderInput={(params) => (
           <TextField
             onChange={e => {
@@ -47,9 +53,7 @@ const SearchBar = ({ posts }) => {
           />
         )}
       />
-      <Button variant='contained' color='secondary' type='submit'>
-        Search
-      </Button>
+      <SearchButton post={'postId'}/>
     </form>
   )
 }
@@ -73,5 +77,18 @@ const LoginButton = (props) => (
     color='secondary'
     startIcon={<Icon>person</Icon>}>
     {props.loggedIn ? 'Logout' : 'Login'}
+  </Button>
+)
+
+const SearchButton = (props) => (
+  <Button
+    variant='contained'
+    color='secondary'
+    type='submit'
+    component={Link} to={{
+      pathname: '/#post',
+      search: props.post
+    }}>
+    Search
   </Button>
 )
