@@ -53,7 +53,12 @@ const SearchBar = ({ posts }) => {
           />
         )}
       />
-      <SearchButton post={'postId'}/>
+      <Button
+        variant='contained'
+        color='secondary'
+        type='submit'>
+        Search
+      </Button>
     </form>
   )
 }
@@ -77,18 +82,5 @@ const LoginButton = (props) => (
     color='secondary'
     startIcon={<Icon>person</Icon>}>
     {props.loggedIn ? 'Logout' : 'Login'}
-  </Button>
-)
-
-const SearchButton = (props) => (
-  <Button
-    variant='contained'
-    color='secondary'
-    type='submit'
-    component={Link} to={{
-      pathname: '/#post',
-      search: props.post
-    }}>
-    Search
   </Button>
 )
