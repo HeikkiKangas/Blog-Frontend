@@ -24,7 +24,6 @@ export const Post = (props) => {
       }}>{ open ? 'Close post' : 'Read post'}</Button>
       <div>
         <Likes post={post} setPost={setPost}/>
-        <Tags tags={post.tags}/>
         <CommentBox postID={post.id} comments={post.comments}/>
       </div>
     </div>
@@ -43,8 +42,6 @@ const Likes = ({ post, setPost }) =>
     }}>
     {post.likes} people like this
   </a>
-
-const Tags = ({ tags }) => <div id='tags'>{tags.map(tag => <a href='localhost:3000' key={tag}>{tag}</a>)}</div>
 
 const DeleteButton = (props) => {
   const [open, setOpen] = React.useState(false)

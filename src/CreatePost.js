@@ -31,7 +31,6 @@ export const CreatePost = () => {
           console.log('Focus.', editor)
         } }
       />
-      <input type="text" placeholder="Tags" id="tagInput"/>
       <br/>
       <SubmitButton/>
     </div>

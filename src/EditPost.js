@@ -117,7 +117,6 @@ const Editor = ({ post, setRedirect }) => (
         post.text = editor.getData()
       }}
     />
-    <input type="text" placeholder="Tags" id="tagInput" defaultValue={post.tags}/>
     {/*
     <Autocomplete
         multiple
