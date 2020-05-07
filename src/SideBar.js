@@ -10,7 +10,7 @@ export const SideBar = (props) => (
         ? <li>You haven&apos;t viewed anything yet.</li>
         : props.recentlyViewed.map((post, index) =>
           <li key={index}>
-            <a href={'/#post' + post.id}>
+            <a id='sideLink' href={'/#post' + post.id}>
               {post.title}
             </a>
           </li>
