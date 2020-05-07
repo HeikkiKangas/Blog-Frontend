@@ -50,12 +50,6 @@ const SearchBar = ({ posts }) => {
           />
         )}
       />
-      <Button
-        variant='contained'
-        color='secondary'
-        component={Link} to={'#post'}>
-        Search
-      </Button>
     </form>
   )
 }
