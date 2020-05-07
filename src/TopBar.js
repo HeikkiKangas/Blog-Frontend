@@ -19,16 +19,38 @@ export const TopBar = (props) => {
 const SearchBar = ({ posts }) => {
   console.log('TopBar')
   console.log(posts)
+  let search
 
   return (
-    <Autocomplete
-      id="searchBar"
-      options={posts === undefined ? [] : posts.map(p => p.title)}
-      autoComplete={true}
-      openOnFocus={false}
-      renderInput={(params) => (
-        <TextField {...params} label="Search posts" margin="normal" variant="outlined" />
-      )}/>
+    <form
+      id='searchBarForm'
+      onSubmit={(e) => {
+        e.preventDefault()
+        console.log(posts.find(p => p.title === search))
+      }}>
+      <Autocomplete
+        id="searchBar"
+        options={posts === undefined ? [] : posts.map(p => p.title)}
+        autoComplete={true}
+        openOnFocus={false}
+        onChange={(e) => console.log(posts[(Number(e.target.dataset.optionIndex))])}
+        renderInput={(params) => (
+          <TextField
+            onChange={e => {
+              search = e.target.value
+              console.log(search)
+            }}
+            {...params}
+            label="Search posts"
+            margin="normal"
+            variant="outlined"
+          />
+        )}
+      />
+      <Button variant='contained' color='secondary' type='submit'>
+        Search
+      </Button>
+    </form>
   )
 }
 
