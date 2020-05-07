@@ -2,8 +2,6 @@
 import React from 'react'
 import './posts.css'
 import { SideBar } from './SideBar'
-import { Link } from 'react-router-dom'
-import { Button } from '@material-ui/core'
 import { Post } from './Post'
 
 export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts }) => {

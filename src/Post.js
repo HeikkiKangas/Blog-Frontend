@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { Button, Dialog, DialogActions, DialogTitle, Icon, IconButton, Tooltip } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogTitle, Icon, Tooltip } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { CommentBox } from './Comment'
+import API_URL from './API_URL'
 
 export const Post = (props) => {
   const [post, setPost] = React.useState(props.post)
@@ -35,7 +36,7 @@ const Likes = ({ post, setPost }) =>
     href='#'
     onClick={(e) => {
       e.preventDefault()
-      fetch(`http://localhost:8080/api/posts/${post.id}/like`, { method: 'POST' })
+      fetch(`${API_URL}/posts/${post.id}/like`, { method: 'POST' })
         .then(response => response.json())
         .then(json => setPost({ ...post, likes: json.likes }))
     }}>
@@ -50,7 +51,7 @@ const DeleteButton = (props) => {
 
   const deletePost = async ({ post, posts, setPosts, setSnackbarState }) => {
     console.log('Deleting post id:' + post.id)
-    const response = await fetch('http://localhost:8080/api/posts/' + post.id, { method: 'delete' })
+    const response = await fetch(`${API_URL}/posts/${post.id}`, { method: 'delete' })
       .catch(console.log)
 
     const newState = { open: true, text: `Could not delete ${post.title}.` }

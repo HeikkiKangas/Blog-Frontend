@@ -6,12 +6,13 @@ import { Posts } from './Posts'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Slide, Snackbar } from '@material-ui/core'
 import { EditPost } from './EditPost'
+import API_URL from './API_URL'
 
 export const App = () => {
   const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
   const [posts, setPosts] = React.useState([])
 
-  const fetchPosts = () => fetch('http://localhost:8080/api/posts')
+  const fetchPosts = () => fetch(`${API_URL}/posts`)
     .then(response => response.json())
     .then(json => {
       setPosts(json)
@@ -32,15 +33,23 @@ export const App = () => {
         <Route
           exact={true}
           path={'/'}
-          render={() => <Posts setSnackbarState={setSnackbarState} posts={posts} setPosts={setPosts}/>}/>
+          render={() =>
+            <Posts
+              setSnackbarState={setSnackbarState}
+              posts={posts}
+              setPosts={setPosts}
+            />}
+        />
 
         <Route
           path={'/createpost'}
-          component={EditPost}/>
+          render={() => <EditPost/>}
+        />
 
         <Route
           path='/editpost/:postId'
-          component={EditPost}/>
+          render={() => <EditPost/>}
+        />
 
         <Snackbar
           open={snackbarState.open}

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import CKEditor from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import React from 'react'
@@ -5,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import { Link, Redirect, useParams } from 'react-router-dom'
 // import GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor';
 import './editPost.css'
+import API_URL from './API_URL'
 
 export const EditPost = (props) => {
   const [post, setPost] = React.useState(undefined)
@@ -14,11 +16,11 @@ export const EditPost = (props) => {
   console.log(setPost)
   React.useEffect(() => {
     if (postId) {
-      fetch(`http://localhost:8080/api/posts/${postId}`)
+      fetch(`${API_URL}/posts/${postId}`)
         .then(response => response.json())
         .then(postDownloaded)
     } else {
-      fetch('http://localhost:8080/api/users/1')
+      fetch(`${API_URL}/users/1`)
         .then(response => response.json())
         .then(json => setPost({ text: '', author: json, title: '' }))
     }
@@ -42,7 +44,7 @@ export const EditPost = (props) => {
 
 const updatePost = (post) => (
   fetch(
-    `http://localhost:8080/api/posts/${post.id}`,
+    `${API_URL}/posts/${post.id}`,
     {
       method: 'PATCH',
       headers: {
@@ -56,7 +58,7 @@ const updatePost = (post) => (
 
 const createPost = (post) => (
   fetch(
-    'http://localhost:8080/api/posts/',
+    API_URL + '/posts/',
     {
       method: 'POST',
       headers: {
@@ -93,19 +95,22 @@ const Editor = ({ post, setRedirect }) => (
   <div id={'editor'}>
     <input type="text" placeholder="Title" id="titleInput"
       defaultValue={post.title ? post.title : ''}
-      onChange={event => post.title = event.target.value}/>
+      onChange={event => { post.title = event.target.value }}/>
 
     <br/>
 
     <CKEditor
       editor={ClassicEditor}
       onInit={editor => {
-        // editor.data.processor = new GFMDataProcessor(editor.editing.view.document)
         editor.setData(post.text ? post.text : 'Dear Diary, ')
         if (!post.id) {
           post.likes = 0
           post.comments = []
         }
+        // Can't add plugins when using built editor from ckeditor5-build.
+        // Have to use ckeditor5-editor instead.
+        // https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html
+        // const Markdown = (editor) => { editor.data.processor = new GFMDataProcessor(editor.editing.view.document) }
         console.log('Editor is ready to use!')
       }}
       onChange={(event, editor) => {
@@ -113,6 +118,23 @@ const Editor = ({ post, setRedirect }) => (
       }}
     />
     <input type="text" placeholder="Tags" id="tagInput" defaultValue={post.tags}/>
+    {/*
+    <Autocomplete
+        multiple
+        id="tags"
+        options={[]}
+        defaultValue={[]}
+        freeSolo
+        renderTags={(value, getTagProps) =>
+          value.map((option, index) => (
+            <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+          ))
+        }
+        renderInput={(params) => (
+          <TextField {...params} variant="outlined" label="Tags" placeholder="Favorites" />
+        )}
+      />
+    */}
     <br/>
     <SubmitButton post={post} setRedirect={setRedirect}/>
   </div>

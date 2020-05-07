@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
+import API_URL from './API_URL'
 
 // Form for user to fill in name and comment -- works perfectly fine
 const CommentForm = (props) => {
@@ -85,7 +86,7 @@ export const CommentBox = (props) => {
   const addComment = (newComment, setNewComment) => {
     console.log('post id ' + props.postID)
     fetch(
-      `http://localhost:8080/api/posts/${props.postID}/comment`,
+      `${API_URL}/posts/${props.postID}/comment`,
       {
         method: 'POST',
         headers: {
