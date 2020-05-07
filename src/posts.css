@@ -16,3 +16,10 @@
 #likeCount {
     margin: 5px;
 }
+
+@media (max-width: 750px) {
+    #posts {
+        width: 99%;
+        margin: auto;
+    }
+}
