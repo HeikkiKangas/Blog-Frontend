@@ -2,3 +2,7 @@ a:link#comments {
     color: hotpink;
     text-decoration: none;
 }
+
+p.comment-body {
+    word-wrap: break-word;
+}
