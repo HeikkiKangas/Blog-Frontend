@@ -10,7 +10,7 @@ export const Post = (props) => {
   const [open, setOpen] = React.useState(false)
   const text = open ? post.text : post.text.substring(0, 350) + '...'
   return (
-    <div className='post' id='post'>
+    <div className='post' id={'post' + post.id}>
       <EditButton id={post.id}/>
       <DeleteButton {...props} />
       <h1 className='title'>{post.title}</h1>
