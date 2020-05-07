@@ -1,4 +1,8 @@
 a:link#likeCount {
-    color: hotpink;
-    text-decoration: none;
+     color: hotpink;
+     text-decoration: none;
+ }
+
+#editButton {
+    margin-right: 15px;
 }

@@ -90,7 +90,7 @@ const DeleteButton = (props) => {
 
 const EditButton = (props) => (
   <Button
-    className={'editButton'}
+    id={'editButton'}
     variant={'contained'}
     fullWidth={false}
     color={'secondary'}
