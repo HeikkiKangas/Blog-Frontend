@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
@@ -10,7 +11,7 @@ export const TopBar = (props) => {
     <div id={'topBar'}>
       <CreatePostButton/>
       <LoginButton loggedIn={false}/>
-      <SearchBar/>
+      <SearchBar posts={props.posts}/>
     </div>
   )
 }
