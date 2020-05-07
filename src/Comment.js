@@ -6,22 +6,29 @@ import './comment.css'
 
 // Individual comment
 // Format timestamp
-const Comment = ({ comment, admin, postId, comments, setComments }) =>
-  <div className="comment">
-    <p className="comment-header">{comment.author}</p>
-    <p className='comment-timestamp'>{new Date(comment.timestamp).toLocaleString()}</p>
-    <p className="comment-body">{comment.text}</p>
-    <Button onClick={async () => {
-      const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'delete' })
-      if (response.ok) {
-        setComments = comments.filter(x => {
-          return x.id !== postId
-        })
-      }
-    }}>
-      Delete Comment
-    </Button>
-  </div>
+const Comment = ({ comment, admin, postId, comments, setComments }) => {
+  // const [comment, setComment] = React.useState(props.comment)
+  return (
+    <div className="comment">
+      <p className="comment-header">{comment.author}</p>
+      <p className='comment-timestamp'>{new Date(comment.timestamp).toLocaleString()}</p>
+      <p className="comment-body">{comment.text}</p>
+      <Button>
+      Like
+      </Button>
+      <Button onClick={async () => {
+        const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
+        if (response.ok) {
+          setComments = comments.filter(x => {
+            return x.id !== postId
+          })
+        }
+      }}>
+      Delete
+      </Button>
+    </div>
+  )
+}
 
 const Comments = ({ comments, postId, setComments }) =>
   <div className='comments'>

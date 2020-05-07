@@ -49,7 +49,7 @@ const DeleteButton = (props) => {
 
   const deletePost = async ({ post, posts, setPosts, setSnackbarState }) => {
     console.log('Deleting post id:' + post.id)
-    const response = await fetch(`${API_URL}/posts/${post.id}`, { method: 'delete' })
+    const response = await fetch(`${API_URL}/posts/${post.id}`, { method: 'DELETE' })
       .catch(console.log)
 
     const newState = { open: true, text: `Could not delete ${post.title}.` }
