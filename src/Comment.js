@@ -4,47 +4,6 @@ import { Button, TextField } from '@material-ui/core'
 import API_URL from './API_URL'
 import './comment.css'
 
-// Form for user to fill in name and comment -- works perfectly fine
-const CommentForm = (props) => {
-  let author
-  let comment
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    console.log(author + ' : ' + comment)
-    props.addComment(author, comment)
-    author = ''
-    comment = ''
-    // clear author and comment
-  }
-
-  const handleNameInput = e => {
-    author = e.target.value
-  }
-
-  const handleCommentInput = e => {
-    comment = e.target.value
-  }
-
-  return (
-    <form className="comment-form" onSubmit={handleSubmit}>
-      <div className="comment-form-fields">
-        <input placeholder="Name" required value={author} onChange={handleNameInput}/><br />
-        <textarea placeholder="Comment" rows="4" required value={comment} onChange={handleCommentInput} />
-      </div>
-      <div className="comment-form-actions">
-        <button type="submit">Post Comment</button>
-        <Button
-          type='submit'
-          color='secondary'
-          variant='contained'>
-          Post Comment
-        </Button>
-      </div>
-    </form>
-  )
-}
-
 // Individual comment
 // Format timestamp
 const Comment = ({ comment, admin }) =>
