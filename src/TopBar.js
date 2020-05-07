@@ -19,15 +19,12 @@ export const TopBar = (props) => {
 const SearchBar = ({ posts }) => {
   console.log('TopBar')
   console.log(posts)
-  let search
-  const [postId, setPostId] = React.useState(null)
 
   return (
     <form
       id='searchBarForm'
       onSubmit={(e) => {
         e.preventDefault()
-        console.log(posts.find(p => p.title === search))
       }}>
       <Autocomplete
         id="searchBar"
@@ -36,8 +33,13 @@ const SearchBar = ({ posts }) => {
         openOnFocus={false}
         onChange={e => {
           console.log(posts[(Number(e.target.dataset.optionIndex))])
-          setPostId(posts[(Number(e.target.dataset.optionIndex))].id)
-          console.log(postId)
+          console.log(e.target.dataset.optionIndex)
+          if (e.target.dataset.optionIndex) {
+            const postId = posts[(Number(e.target.dataset.optionIndex))].id
+            const element = document.getElementById('post' + postId)
+            element.scrollIntoView()
+            console.log(postId)
+          }
         }}
         renderInput={(params) => (
           <TextField
@@ -51,7 +53,7 @@ const SearchBar = ({ posts }) => {
       <Button
         variant='contained'
         color='secondary'
-        component={Link} to={'#post' + postId}>
+        component={Link} to={'#post'}>
         Search
       </Button>
     </form>
