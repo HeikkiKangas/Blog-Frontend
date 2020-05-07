@@ -93,7 +93,7 @@ const SubmitButton = ({ post, setRedirect }) => (
 
 const Editor = ({ post, setRedirect }) => (
   <div id={'editor'}>
-    <input type="text" placeholder="Title" id="titleInput"
+    <input className='titleStyle' type="text" placeholder="Title" id="titleInput"
       defaultValue={post.title ? post.title : ''}
       onChange={event => { post.title = event.target.value }}/>
 

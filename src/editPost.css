@@ -31,7 +31,7 @@ input[type=text] {
     outline: none;
 }
 
-input[type=text]:focus {
+.titleStyle:focus {
     border: 3px solid #E498A5;
     outline: none;
 }
