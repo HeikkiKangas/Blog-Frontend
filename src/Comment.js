@@ -6,17 +6,26 @@ import './comment.css'
 
 // Individual comment
 // Format timestamp
-const Comment = ({ comment, admin }) =>
+const Comment = ({ comment, admin, postId, comments, setComments }) =>
   <div className="comment">
     <p className="comment-header">{comment.author}</p>
     <p className='comment-timestamp'>{new Date(comment.timestamp).toLocaleString()}</p>
     <p className="comment-body">{comment.text}</p>
-    {admin ? null : <Button>Delete Comment</Button>}
+    <Button onClick={async () => {
+      const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'delete' })
+      if (response.ok) {
+        setComments = comments.filter(x => {
+          return x.id !== postId
+        })
+      }
+    }}>
+      Delete Comment
+    </Button>
   </div>
 
-const Comments = ({ comments }) =>
+const Comments = ({ comments, postId, setComments }) =>
   <div className='comments'>
-    {comments.map((comment, index) => <Comment comment={comment} key={comment.id} />)}
+    {comments.map((comment, index) => <Comment comment={comment} key={comment.id} postId={postId} comments={comments} setComments={setComments}/>)}
   </div>
 
 const Form = ({ addComment }) => {
@@ -73,7 +82,7 @@ export const CommentBox = (props) => {
       { visible
         ? <>
           <h3>Comments</h3>
-          <Comments comments={comments}/>
+          <Comments comments={comments} postId={props.postID} setComments={setComments}/>
           <Form addComment={addComment}/>
         </>
         : null }
