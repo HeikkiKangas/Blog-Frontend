@@ -4,6 +4,7 @@ import { Button, Dialog, DialogActions, DialogTitle, Icon, Tooltip } from '@mate
 import { Link } from 'react-router-dom'
 import { CommentBox } from './Comment'
 import API_URL from './API_URL'
+import './post.css'
 
 export const Post = (props) => {
   const [post, setPost] = React.useState(props.post)

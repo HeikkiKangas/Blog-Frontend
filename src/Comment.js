@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import API_URL from './API_URL'
+import './comment.css'
 
 // Form for user to fill in name and comment -- works perfectly fine
 const CommentForm = (props) => {
@@ -104,7 +105,7 @@ export const CommentBox = (props) => {
 
   return (
     <div className="comment-box">
-      <a href="#" onClick={(e) => {
+      <a id='comments' href="#" onClick={(e) => {
         e.preventDefault()
         setVisible(!visible)
       }}>
