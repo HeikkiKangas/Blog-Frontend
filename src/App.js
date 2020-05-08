@@ -43,12 +43,12 @@ export const App = () => {
 
         <Route
           path={'/createpost'}
-          render={() => <EditPost/>}
+          render={() => <EditPost posts={posts} setPosts={setPosts}/>}
         />
 
         <Route
           path='/editpost/:postId'
-          render={() => <EditPost/>}
+          render={() => <EditPost posts={posts} setPosts={setPosts}/>}
         />
 
         <Snackbar

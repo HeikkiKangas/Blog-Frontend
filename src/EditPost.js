@@ -38,7 +38,7 @@ export const EditPost = (props) => {
     return <h1 className='loadingMessage'>Loading</h1>
   } else {
     console.log(post)
-    return <Editor post={post} setRedirect={setRedirect}/>
+    return <Editor post={post} setRedirect={setRedirect} {...props}/>
   }
 }
 
@@ -52,6 +52,7 @@ const updatePost = (post) => (
       },
       body: JSON.stringify(post)
     })
+    .then(response => response.json())
     .then(console.log)
     .catch(console.log)
 )
@@ -66,11 +67,11 @@ const createPost = (post) => (
       },
       body: JSON.stringify(post)
     })
-    .then(console.log)
+    .then(response => response.json())
     .catch(console.log)
 )
 
-const SubmitButton = ({ post, setRedirect }) => (
+const SubmitButton = ({ post, setRedirect, ...props }) => (
   <Button
     id={'submitButton'}
     variant={'contained'}
@@ -80,8 +81,8 @@ const SubmitButton = ({ post, setRedirect }) => (
     onClick={() => {
       console.log(post)
       post.id === undefined
-        ? createPost(post).then(setRedirect(true))
-        : updatePost(post).then(setRedirect(true))
+        ? createPost(post).then(json => props.setPosts(props.posts.unshift(json))).then(setRedirect(true))
+        : updatePost(post).then(console.log).then(setRedirect(true))
     }}>
     {
       post.id === undefined
@@ -91,7 +92,7 @@ const SubmitButton = ({ post, setRedirect }) => (
   </Button>
 )
 
-const Editor = ({ post, setRedirect }) => (
+const Editor = ({ post, setRedirect, ...props }) => (
   <div id={'editor'}>
     <input type="text" placeholder="Title" id="titleInput"
       defaultValue={post.title ? post.title : ''}
@@ -135,6 +136,6 @@ const Editor = ({ post, setRedirect }) => (
       />
     */}
     <br/>
-    <SubmitButton post={post} setRedirect={setRedirect}/>
+    <SubmitButton post={post} setRedirect={setRedirect} {...props}/>
   </div>
 )
