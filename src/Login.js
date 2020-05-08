@@ -24,22 +24,25 @@ export const Login = () => {
   return (
     <div className="Login">
       <form className='loginForm' onSubmit={handleSubmit}>
-        <TextField
-          controlId='username'
-          autofocus
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          type="text"
-          variant='outlined'
-          label='Username' />
-        <TextField
-          controlId='password'
-          autofocus
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          type="password"
-          variant='outlined'
-          label='Password' />
+        <div className="username">
+          <TextField
+            id='username'
+            autoFocus
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            type="text"
+            variant='outlined'
+            label='Username' />
+        </div>
+        <div className="password">
+          <TextField
+            id='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            type="password"
+            variant='outlined'
+            label='Password' />
+        </div>
         <Button disabled={!validateForm()} type="submit">
           Login
         </Button>
