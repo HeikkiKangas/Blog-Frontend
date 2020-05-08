@@ -16,7 +16,8 @@ export const Login = () => {
     event.preventDefault()
     fetch(`${API_URL}/users/login`, {
       headers: new Headers({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`
+        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+        username: username
       })
     })
   }
