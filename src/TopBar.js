@@ -27,6 +27,7 @@ export const TopBar = (props) => {
   return (
     <div id={'topBar'}>
       <CreatePostButton/>
+      <LoginButton loggedIn={false}/>
       <SearchBar posts={props.posts}/>
     </div>
   )
@@ -80,5 +81,16 @@ const CreatePostButton = (props) => (
     color='secondary'
     component={Link} to="/createpost/">
     Create blog post
+  </Button>
+)
+
+const LoginButton = (props) => (
+  <Button
+    id='loginButton'
+    variant='contained'
+    fullWidth={false}
+    color='secondary'
+    startIcon={<Icon>person</Icon>}>
+    {props.loggedIn ? 'Logout' : 'Login'}
   </Button>
 )
