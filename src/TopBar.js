@@ -90,6 +90,7 @@ const LoginButton = (props) => (
     variant='contained'
     fullWidth={false}
     color='secondary'
+    component={Link} to="/login/"
     startIcon={<Icon>person</Icon>}>
     {props.loggedIn ? 'Logout' : 'Login'}
   </Button>

@@ -3,6 +3,7 @@ import './App.css'
 import { Banner } from './Banner'
 import { TopBar } from './TopBar'
 import { Posts } from './Posts'
+import { Login } from './Login'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Slide, Snackbar } from '@material-ui/core'
 import { EditPost } from './EditPost'
@@ -49,6 +50,11 @@ export const App = () => {
         <Route
           path='/editpost/:postId'
           render={() => <EditPost/>}
+        />
+
+        <Route
+          path={'/login'}
+          render={() => <Login/>}
         />
 
         <Snackbar
