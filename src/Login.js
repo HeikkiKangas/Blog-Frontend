@@ -4,7 +4,7 @@ import './Login.css'
 import { TextField } from '@material-ui/core'
 import API_URL from './API_URL'
 
-export const Login = () => {
+export const Login = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -12,14 +12,16 @@ export const Login = () => {
     return username.length > 0 && password.length > 0
   }
 
-  function handleSubmit (event) {
+  const handleSubmit = async event => {
     event.preventDefault()
-    fetch(`${API_URL}/users/login`, {
+
+    const response = await fetch(`${API_URL}/users/login`, {
       headers: new Headers({
         Authorization: `Basic ${btoa(`${username}:${password}`)}`,
         username: username
       })
     })
+    if (response.ok) props.setUser({ username: username, password: password, admin: response.json().admin })
   }
 
   return (

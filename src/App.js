@@ -12,6 +12,7 @@ import API_URL from './API_URL'
 export const App = () => {
   const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
   const [posts, setPosts] = React.useState([])
+  const [user, setUser] = React.useState({})
 
   const fetchPosts = () => fetch(`${API_URL}/posts`)
     .then(response => response.json())
@@ -30,7 +31,7 @@ export const App = () => {
     <BrowserRouter>
       <div>
         <Banner title={'Pöhinää ja pastellivärejä'}/>
-        <TopBar posts={posts}/>
+        <TopBar posts={posts} user={user} setUser={setUser}/>
         <Route
           exact={true}
           path={'/'}
@@ -39,6 +40,8 @@ export const App = () => {
               setSnackbarState={setSnackbarState}
               posts={posts}
               setPosts={setPosts}
+              user={user}
+              setUser={setUser}
             />}
         />
 
@@ -54,7 +57,7 @@ export const App = () => {
 
         <Route
           path={'/login'}
-          render={() => <Login/>}
+          render={() => <Login user={user} setUser={setUser}/>}
         />
 
         <Snackbar

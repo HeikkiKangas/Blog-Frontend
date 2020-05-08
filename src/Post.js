@@ -10,7 +10,7 @@ export const Post = (props) => {
   const [post, setPost] = React.useState(props.post)
   const [open, setOpen] = React.useState(false)
   const text = open ? post.text : post.text.substring(0, 350) + '...'
-  const admin = props.admin
+  const admin = props.user.admin
   return (
     <div className='post' id={'post' + post.id}>
       {admin ? null : <EditButton id={post.id}/>}

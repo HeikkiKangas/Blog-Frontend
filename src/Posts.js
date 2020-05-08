@@ -4,7 +4,7 @@ import './posts.css'
 import { SideBar } from './SideBar'
 import { Post } from './Post'
 
-export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts }) => {
+export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts, user, setUser }) => {
   const [recentlyViewed, setRecentlyViewed] = React.useState([])
 
   return (
@@ -15,6 +15,8 @@ export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts }) => {
             <Post
               post={post}
               posts={posts}
+              user={user}
+              setUser={setUser}
               setPosts={setPosts}
               key={post.id}
               snackbarState={snackbarState}
