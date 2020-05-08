@@ -24,9 +24,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const TopBar = (props) => {
+  const admin = props.admin
   return (
     <div id={'topBar'}>
-      <CreatePostButton/>
+      {admin ? null : <CreatePostButton/>}
       <LoginButton loggedIn={false}/>
       <SearchBar posts={props.posts}/>
     </div>

@@ -6,7 +6,7 @@ import './comment.css'
 
 // Individual comment
 // Format timestamp
-const Comment = ({ postId, comments, setComments, ...props }) => {
+const Comment = ({ postId, admin, comments, setComments, ...props }) => {
   const [comment, setComment] = React.useState(props.comment)
   return (
     <div className="comment">
@@ -20,12 +20,12 @@ const Comment = ({ postId, comments, setComments, ...props }) => {
       }>
         {`${comment.likes} people like this`}
       </Button>
-      <Button onClick={async () => {
+      {admin ? null : <Button onClick={async () => {
         const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
         if (response.ok) setComments(comments.filter(x => x.id !== comment.id))
       }}>
       Delete
-      </Button>
+      </Button>}
     </div>
   )
 }

@@ -10,10 +10,11 @@ export const Post = (props) => {
   const [post, setPost] = React.useState(props.post)
   const [open, setOpen] = React.useState(false)
   const text = open ? post.text : post.text.substring(0, 350) + '...'
+  const admin = props.admin
   return (
     <div className='post' id={'post' + post.id}>
-      <EditButton id={post.id}/>
-      <DeleteButton {...props} />
+      {admin ? null : <EditButton id={post.id}/>}
+      {admin ? null : <DeleteButton {...props} />}
       <h1 className='title'>{post.title}</h1>
       <h3 className='author'>{post.author.userName}</h3>
       <p className='timestamp'>{new Date(post.timestamp).toLocaleString()}</p>
