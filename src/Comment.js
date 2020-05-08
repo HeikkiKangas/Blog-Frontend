@@ -6,26 +6,23 @@ import './comment.css'
 
 // Individual comment
 // Format timestamp
-const Comment = ({ admin, postId, comments, setComments, ...props }) => {
+const Comment = ({ postId, comments, setComments, ...props }) => {
   const [comment, setComment] = React.useState(props.comment)
   return (
     <div className="comment">
       <p className="comment-header">{comment.author}</p>
       <p className='comment-timestamp'>{new Date(comment.timestamp).toLocaleString()}</p>
       <p className="comment-body">{comment.text}</p>
-      <Button
-        onClick={() => fetch(`${API_URL}/posts/${postId}/comment/${comment.id}/like`, { method: 'POST' })
+      <Button onClick={() =>
+        fetch(`${API_URL}/posts/${postId}/comment/${comment.id}/like`, { method: 'POST' })
           .then(response => response.json())
-          .then(json => setComment({ ...comment, likes: json.likes }))}>
-        {`${comment.likes} Likes`}
+          .then(json => setComment({ ...comment, likes: json.likes }))
+      }>
+        {`${comment.likes} people like this`}
       </Button>
       <Button onClick={async () => {
         const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
-        if (response.ok) {
-          setComments = comments.filter(x => {
-            return x.id !== postId
-          })
-        }
+        if (response.ok) setComments(comments.filter(x => x.id !== comment.id))
       }}>
       Delete
       </Button>
