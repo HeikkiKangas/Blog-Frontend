@@ -4,11 +4,11 @@ import './Login.css'
 import { TextField } from '@material-ui/core'
 
 export const Login = () => {
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   function validateForm () {
-    return email.length > 0 && password.length > 0
+    return username.length > 0 && password.length > 0
   }
 
   function handleSubmit (event) {
@@ -19,10 +19,10 @@ export const Login = () => {
     <div className="Login">
       <form className='loginForm' onSubmit={handleSubmit}>
         <TextField
-          controlId='email'
+          controlId='username'
           autofocus
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          value={username}
+          onChange={e => setUsername(e.target.value)}
           type="text"
           variant='outlined'
           label='Username' />
