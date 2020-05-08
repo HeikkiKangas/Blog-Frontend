@@ -13,8 +13,8 @@ export const Post = (props) => {
   const admin = props.user.admin
   return (
     <div className='post' id={'post' + post.id}>
-      {admin ? null : <EditButton id={post.id}/>}
-      {admin ? null : <DeleteButton {...props} />}
+      {admin ? <EditButton id={post.id}/> : null}
+      {admin ? <DeleteButton {...props} /> : null}
       <h1 className='title'>{post.title}</h1>
       <h3 className='author'>{post.author.userName}</h3>
       <p className='timestamp'>{new Date(post.timestamp).toLocaleString()}</p>
