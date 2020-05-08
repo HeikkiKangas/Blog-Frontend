@@ -47,7 +47,7 @@ export const App = () => {
 
         <Route
           path={'/createpost'}
-          render={() => <EditPost/>}
+          render={() => <EditPost user={user} setUser={setUser}/>}
         />
 
         <Route

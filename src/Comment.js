@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
-import {Button, Dialog, DialogActions, DialogTitle, Icon, TextField, Tooltip} from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogTitle, Icon, TextField, Tooltip } from '@material-ui/core'
 import API_URL from './API_URL'
 import './comment.css'
 
@@ -20,7 +20,7 @@ const Comment = ({ postId, admin, comments, setComments, ...props }) => {
       }>
         {`${comment.likes} people like this`}
       </Button>
-      {admin ? null : <DeleteButton postId={postId} comment={comment} setComment={setComment} {...props}/>}
+      {admin ? <DeleteButton postId={postId} comment={comment} setComment={setComment} {...props}/> : null}
     </div>
   )
 }
@@ -34,10 +34,10 @@ const DeleteButton = (props) => {
     const response = await fetch(`${API_URL}/posts/${props.postId}/comment/${comment.id}`, { method: 'DELETE' })
       .catch(console.log)
 
-    const newState = { open: true, text: `Could not delete comment.` }
+    const newState = { open: true, text: 'Could not delete comment.' }
     if (response.ok) {
       setComments(comments.filter(x => x.id !== comment.id))
-      newState.text = `Comment deleted.`
+      newState.text = 'Comment deleted.'
     }
     setSnackbarState(newState)
   }
@@ -50,7 +50,7 @@ const DeleteButton = (props) => {
         Delete
       </Button>
       <Dialog open={open} onClose={handleCloseDialog}>
-        <DialogTitle id='delete-dialog-title'>{`Delete comment"?`}</DialogTitle>
+        <DialogTitle id='delete-dialog-title'>{'Delete comment"?'}</DialogTitle>
         <DialogActions>
           <Button variant='contained' color='secondary' onClick={handleCloseDialog}>
             Cancel

@@ -38,39 +38,41 @@ export const EditPost = (props) => {
     return <h1 className='loadingMessage'>Loading</h1>
   } else {
     console.log(post)
-    return <Editor post={post} setRedirect={setRedirect}/>
+    return <Editor post={post} setRedirect={setRedirect} {...props}/>
   }
 }
 
-const updatePost = (post) => (
+const updatePost = (post, user) => (
   fetch(
     `${API_URL}/posts/${post.id}`,
     {
       method: 'PATCH',
-      headers: {
+      headers: new Headers({
+        Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
         'Content-Type': 'application/json'
-      },
+      }),
       body: JSON.stringify(post)
     })
     .then(console.log)
     .catch(console.log)
 )
 
-const createPost = (post) => (
+const createPost = (post, user) => (
   fetch(
     API_URL + '/posts/',
     {
       method: 'POST',
-      headers: {
+      headers: new Headers({
+        Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`,
         'Content-Type': 'application/json'
-      },
+      }),
       body: JSON.stringify(post)
     })
     .then(console.log)
     .catch(console.log)
 )
 
-const SubmitButton = ({ post, setRedirect }) => (
+const SubmitButton = ({ post, setRedirect, ...props }) => (
   <Button
     id={'submitButton'}
     variant={'contained'}
@@ -80,8 +82,8 @@ const SubmitButton = ({ post, setRedirect }) => (
     onClick={() => {
       console.log(post)
       post.id === undefined
-        ? createPost(post).then(setRedirect(true))
-        : updatePost(post).then(setRedirect(true))
+        ? createPost(post, props.user).then(setRedirect(true))
+        : updatePost(post, props.user).then(setRedirect(true))
     }}>
     {
       post.id === undefined
@@ -91,7 +93,7 @@ const SubmitButton = ({ post, setRedirect }) => (
   </Button>
 )
 
-const Editor = ({ post, setRedirect }) => (
+const Editor = ({ post, setRedirect, ...props }) => (
   <div id={'editor'}>
     <input className='titleStyle' type="text" placeholder="Title" id="titleInput"
       defaultValue={post.title ? post.title : ''}
@@ -135,6 +137,6 @@ const Editor = ({ post, setRedirect }) => (
       />
     */}
     <br/>
-    <SubmitButton post={post} setRedirect={setRedirect}/>
+    <SubmitButton post={post} setRedirect={setRedirect} {...props}/>
   </div>
 )
