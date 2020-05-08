@@ -13,8 +13,3 @@
 #loginButton {
     float: right;
 }
-
-input[type=text]:focus {
-    border: 3px solid #E498A5;
-    outline: none;
-}
