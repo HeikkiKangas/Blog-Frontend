@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
-import { Button, TextField } from '@material-ui/core'
+import {Button, Dialog, DialogActions, DialogTitle, Icon, TextField, Tooltip} from '@material-ui/core'
 import API_URL from './API_URL'
 import './comment.css'
 
@@ -20,19 +20,61 @@ const Comment = ({ postId, admin, comments, setComments, ...props }) => {
       }>
         {`${comment.likes} people like this`}
       </Button>
-      {admin ? null : <Button onClick={async () => {
-        const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
-        if (response.ok) setComments(comments.filter(x => x.id !== comment.id))
-      }}>
-      Delete
-      </Button>}
+      {admin ? null : <DeleteButton postId={postId} comment={comment} setComment={setComment} {...props}/>}
     </div>
   )
 }
 
-const Comments = ({ comments, postId, setComments }) =>
+const DeleteButton = (props) => {
+  const [open, setOpen] = React.useState(false)
+  const handleCloseDialog = () => setOpen(false)
+
+  const deleteComment = async ({ comment, comments, setComments, setSnackbarState }) => {
+    console.log('Deleting comment id:' + comment.id)
+    const response = await fetch(`${API_URL}/posts/${props.postId}/comment/${comment.id}`, { method: 'DELETE' })
+      .catch(console.log)
+
+    const newState = { open: true, text: `Could not delete comment.` }
+    if (response.ok) {
+      setComments(comments.filter(x => x.id !== comment.id))
+      newState.text = `Comment deleted.`
+    }
+    setSnackbarState(newState)
+  }
+
+  return (
+    <>
+      <Button
+        className='deleteButton'
+        onClick={() => setOpen(true)}>
+        Delete
+      </Button>
+      <Dialog open={open} onClose={handleCloseDialog}>
+        <DialogTitle id='delete-dialog-title'>{`Delete comment"?`}</DialogTitle>
+        <DialogActions>
+          <Button variant='contained' color='secondary' onClick={handleCloseDialog}>
+            Cancel
+          </Button>
+          <Button variant='contained' color='secondary' onClick={() => deleteComment(props)}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
+
+/*
+        onClick={async () => {
+        const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
+        if (response.ok) setComments(comments.filter(x => x.id !== comment.id))
+        }}>
+        Delete
+*/
+
+const Comments = ({ comments, postId, setComments, ...props }) =>
   <div className='comments'>
-    {comments.map((comment, index) => <Comment comment={comment} key={comment.id} postId={postId} comments={comments} setComments={setComments}/>)}
+    {comments.map((comment, index) => <Comment comment={comment} key={comment.id} postId={postId} comments={comments} setComments={setComments} {...props}/>)}
   </div>
 
 const Form = ({ addComment }) => {
@@ -89,7 +131,7 @@ export const CommentBox = (props) => {
       { visible
         ? <>
           <h3>Comments</h3>
-          <Comments comments={comments} postId={props.postID} setComments={setComments}/>
+          <Comments comments={comments} postId={props.postID} setComments={setComments} {...props}/>
           <Form addComment={addComment}/>
         </>
         : null }

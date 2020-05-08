@@ -25,7 +25,7 @@ export const Post = (props) => {
       }}>{ open ? 'Close post' : 'Read post'}</Button>
       <div>
         <Likes post={post} setPost={setPost}/>
-        <CommentBox postID={post.id} comments={post.comments}/>
+        <CommentBox postID={post.id} comments={post.comments} {...props}/>
       </div>
     </div>
   )
