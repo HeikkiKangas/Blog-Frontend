@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import './Login.css'
 import { TextField } from '@material-ui/core'
+import API_URL from './API_URL'
 
 export const Login = () => {
   const [username, setUsername] = useState('')
@@ -13,6 +14,11 @@ export const Login = () => {
 
   function handleSubmit (event) {
     event.preventDefault()
+    fetch(`${API_URL}/users/login`, {
+      headers: new Headers({
+        Authorization: `Basic ${btoa(`${username}:${password}`)}`
+      })
+    })
   }
 
   return (
