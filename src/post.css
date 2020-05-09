@@ -6,3 +6,7 @@ a:link#likeCount {
 #editButton {
     margin-right: 15px;
 }
+
+.text {
+    word-wrap: break-word
+}
