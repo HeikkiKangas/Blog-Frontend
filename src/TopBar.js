@@ -28,7 +28,7 @@ export const TopBar = (props) => {
   return (
     <div id={'topBar'}>
       {admin ? <CreatePostButton/> : null}
-      <LoginButton loggedIn={false}/>
+      {admin ? <LoginButton loggedIn={true}/> : <LoginButton loggedIn={false}/>}
       <SearchBar posts={props.posts}/>
     </div>
   )
