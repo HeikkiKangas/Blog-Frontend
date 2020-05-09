@@ -43,6 +43,8 @@ export const App = () => {
               setPosts={setPosts}
               user={user}
               setUser={setUser}
+              recentlyViewed={recentlyViewed}
+              setRecentlyViewed={setRecentlyViewed}
             />}
         />
 
