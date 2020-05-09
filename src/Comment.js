@@ -43,6 +43,7 @@ const DeleteButton = (props) => {
     if (response.ok) {
       setComments(comments.filter(x => x.id !== comment.id))
       newState.text = 'Comment deleted.'
+      handleCloseDialog()
     }
     setSnackbarState(newState)
   }
@@ -55,7 +56,7 @@ const DeleteButton = (props) => {
         Delete
       </Button>
       <Dialog open={open} onClose={handleCloseDialog}>
-        <DialogTitle id='delete-dialog-title'>{'Delete comment"?'}</DialogTitle>
+        <DialogTitle id='delete-dialog-title'>{'Delete comment?'}</DialogTitle>
         <DialogActions>
           <Button variant='contained' color='secondary' onClick={handleCloseDialog}>
             Cancel
