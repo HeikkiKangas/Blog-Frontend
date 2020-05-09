@@ -20,7 +20,7 @@ const Comment = ({ postId, admin, comments, setComments, ...props }) => {
       }>
         {`${comment.likes} people like this`}
       </Button>
-      {admin ? <DeleteButton postId={postId} comment={comment} setComment={setComment} {...props}/> : null}
+      {props.user.admin ? <DeleteButton postId={postId} comment={comment} setComment={setComment} {...props}/> : null}
     </div>
   )
 }
@@ -31,7 +31,12 @@ const DeleteButton = (props) => {
 
   const deleteComment = async ({ comment, comments, setComments, setSnackbarState }) => {
     console.log('Deleting comment id:' + comment.id)
-    const response = await fetch(`${API_URL}/posts/${props.postId}/comment/${comment.id}`, { method: 'DELETE' })
+    const response = await fetch(`${API_URL}/posts/${props.postId}/comment/${comment.id}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        Authorization: `Basic ${btoa(`${props.user.username}:${props.user.password}`)}`
+      })
+    })
       .catch(console.log)
 
     const newState = { open: true, text: 'Could not delete comment.' }
