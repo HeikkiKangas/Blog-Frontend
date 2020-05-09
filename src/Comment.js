@@ -20,7 +20,7 @@ const Comment = ({ postId, admin, comments, setComments, ...props }) => {
       }>
         {`${comment.likes} people like this`}
       </Button>
-      {props.user.admin ? <DeleteButton postId={postId} comment={comment} setComment={setComment} {...props}/> : null}
+      {props.user.admin ? <DeleteButton postId={postId} comment={comment} comments={comments} setComments={setComments} {...props}/> : null}
     </div>
   )
 }
