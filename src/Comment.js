@@ -44,6 +44,7 @@ const DeleteButton = (props) => {
       setComments(comments.filter(x => x.id !== comment.id))
       newState.text = 'Comment deleted.'
       handleCloseDialog()
+      window.location.reload()
     }
     setSnackbarState(newState)
   }
@@ -124,6 +125,7 @@ export const CommentBox = (props) => {
     setNewComment({ author: '', text: '' })
     console.log(comments.length)
     comments.forEach(console.log)
+    window.location.reload()
   }
 
   return (
