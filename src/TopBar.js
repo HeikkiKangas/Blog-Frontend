@@ -28,7 +28,7 @@ export const TopBar = (props) => {
   return (
     <div id={'topBar'}>
       {admin ? <CreatePostButton/> : null}
-      {admin ? <LoginButton loggedIn={true}/> : <LoginButton loggedIn={false}/>}
+      <LoginButton user={props.user}/>
       <SearchBar posts={props.posts}/>
     </div>
   )
@@ -91,8 +91,8 @@ const LoginButton = (props) => (
     variant='contained'
     fullWidth={false}
     color='secondary'
-    component={Link} to="/login/"
+    component={Link} to={props.user.username ? '/logout' : '/login'}
     startIcon={<Icon>person</Icon>}>
-    {props.loggedIn ? 'Logout' : 'Login'}
+    {props.user.username ? 'Logout' : 'Login'}
   </Button>
 )
