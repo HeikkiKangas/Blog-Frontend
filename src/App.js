@@ -4,6 +4,7 @@ import { Banner } from './Banner'
 import { TopBar } from './TopBar'
 import { Posts } from './Posts'
 import { Login } from './Login'
+import { Logout } from './Logout'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Slide, Snackbar } from '@material-ui/core'
 import { EditPost } from './EditPost'
@@ -58,6 +59,11 @@ export const App = () => {
         <Route
           path={'/login'}
           render={() => <Login user={user} setUser={setUser}/>}
+        />
+
+        <Route
+          path={'/logout'}
+          render={() => <Logout user={user} setUser={setUser}/>}
         />
 
         <Snackbar
