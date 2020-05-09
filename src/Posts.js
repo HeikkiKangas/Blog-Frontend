@@ -4,8 +4,7 @@ import './posts.css'
 import { SideBar } from './SideBar'
 import { Post } from './Post'
 
-export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts, user, setUser }) => {
-  const [recentlyViewed, setRecentlyViewed] = React.useState([])
+export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts, user, setUser, recentlyViewed, setRecentlyViewed }) => {
 
   return (
     <div>

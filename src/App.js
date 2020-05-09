@@ -13,13 +13,17 @@ import API_URL from './API_URL'
 export const App = () => {
   const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
   const [posts, setPosts] = React.useState([])
-  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user') || ''))
+  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user') || '{}'))
+  const [recentlyViewed, setRecentlyViewed] = React.useState([])
 
   const fetchPosts = () => fetch(`${API_URL}/posts`)
     .then(response => response.json())
     .then(json => {
       setPosts(json)
+      console.log('fetchPosts()')
       console.log(json)
+      console.log('posts:')
+      console.log(posts)
     })
     .catch(console.log)
 
@@ -55,7 +59,7 @@ export const App = () => {
 
         <Route
           path='/editpost/:postId'
-          render={() => <EditPost/>}
+          render={() => <EditPost user={user} setUser={setUser}/>}
         />
 
         <Route

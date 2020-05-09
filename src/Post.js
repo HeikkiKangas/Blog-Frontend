@@ -11,6 +11,7 @@ export const Post = (props) => {
   const [open, setOpen] = React.useState(false)
   const text = open ? post.text : post.text.substring(0, 350) + '...'
   const admin = props.user.admin
+  const { recentlyViewed, setRecentlyViewed } = props
   return (
     <div className='post' id={'post' + post.id}>
       {admin ? <EditButton id={post.id}/> : null}
@@ -21,7 +22,12 @@ export const Post = (props) => {
       <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
       <Button onClick={() => {
         setOpen(!open)
-        if (!props.recentlyViewed.includes(post)) props.setRecentlyViewed(props.recentlyViewed.concat(post))
+        if (!recentlyViewed.includes(post)) {
+          setRecentlyViewed(
+            recentlyViewed.length > 4
+              ? [post, ...recentlyViewed.slice(0, 4)]
+              : [post, ...recentlyViewed])
+        }
       }}>{ open ? 'Close post' : 'Read post'}</Button>
       <div>
         <Likes post={post} setPost={setPost}/>
