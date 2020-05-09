@@ -14,7 +14,7 @@ export const App = () => {
   const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
   const [posts, setPosts] = React.useState([])
   const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user') || '{}'))
-  const [recentlyViewed, setRecentlyViewed] = React.useState([])
+  const [recentlyViewed, setRecentlyViewed] = React.useState(JSON.parse(localStorage.getItem('recentlyViewed') || '[]'))
 
   const fetchPosts = () => fetch(`${API_URL}/posts`)
     .then(response => response.json())

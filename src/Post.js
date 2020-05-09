@@ -23,10 +23,11 @@ export const Post = (props) => {
       <Button onClick={() => {
         setOpen(!open)
         if (!recentlyViewed.includes(post)) {
-          setRecentlyViewed(
-            recentlyViewed.length > 4
-              ? [post, ...recentlyViewed.slice(0, 4)]
-              : [post, ...recentlyViewed])
+          const newList = recentlyViewed.length > 4
+            ? [post, ...recentlyViewed.slice(0, 4)]
+            : [post, ...recentlyViewed]
+          setRecentlyViewed(newList)
+          localStorage.setItem('recentlyViewed', JSON.stringify(newList))
         }
       }}>{ open ? 'Close post' : 'Read post'}</Button>
       <div>
