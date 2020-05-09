@@ -23,7 +23,11 @@ export const Login = (props) => {
       })
     })
       .then(response => response.json())
-      .then(json => props.setUser({ username: username, password: password, admin: json.admin }))
+      .then(json => {
+        const user = { username: username, password: password, admin: json.admin }
+        props.setUser(user)
+        localStorage.setItem('user', JSON.stringify(user))
+      })
       .catch(console.log)
   }
 

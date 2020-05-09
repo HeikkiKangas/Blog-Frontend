@@ -13,7 +13,7 @@ import API_URL from './API_URL'
 export const App = () => {
   const [snackbarState, setSnackbarState] = React.useState({ open: false, text: '' })
   const [posts, setPosts] = React.useState([])
-  const [user, setUser] = React.useState({})
+  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user') || ''))
 
   const fetchPosts = () => fetch(`${API_URL}/posts`)
     .then(response => response.json())
