@@ -4,10 +4,12 @@ import Button from '@material-ui/core/Button'
 import './Login.css'
 import { TextField } from '@material-ui/core'
 import API_URL from './API_URL'
+import Redirect from 'react-router-dom/es/Redirect'
 
 export const Login = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
 
   function validateForm () {
     return username.length > 0 && password.length > 0
@@ -28,35 +30,40 @@ export const Login = (props) => {
         props.setUser(user)
         localStorage.setItem('user', JSON.stringify(user))
       })
+      .then(() => setRedirect(true))
       .catch(console.log)
   }
 
-  return (
-    <div className="Login">
-      <form className='loginForm' onSubmit={handleSubmit}>
-        <div className="username">
-          <TextField
-            id='username'
-            autoFocus
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            type="text"
-            variant='outlined'
-            label='Username' />
-        </div>
-        <div className="password">
-          <TextField
-            id='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-            variant='outlined'
-            label='Password' />
-        </div>
-        <Button disabled={!validateForm()} type="submit">
-          Login
-        </Button>
-      </form>
-    </div>
-  )
+  if (redirect) {
+    return <Redirect to='/'/>
+  } else {
+    return (
+      <div className="Login">
+        <form className='loginForm' onSubmit={handleSubmit}>
+          <div className="username">
+            <TextField
+              id='username'
+              autoFocus
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              type="text"
+              variant='outlined'
+              label='Username'/>
+          </div>
+          <div className="password">
+            <TextField
+              id='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              type="password"
+              variant='outlined'
+              label='Password'/>
+          </div>
+          <Button disabled={!validateForm()} type="submit">
+            Login
+          </Button>
+        </form>
+      </div>
+    )
+  }
 }
