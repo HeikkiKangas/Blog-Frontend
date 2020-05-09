@@ -7,7 +7,10 @@ export const Logout = (props) => {
   const handleSubmit = event => {
     event.preventDefault()
 
-    props.setUser({})
+    const user = { }
+    props.setUser(user)
+    localStorage.setItem('user', JSON.stringify(user))
+
   }
 
   return (
