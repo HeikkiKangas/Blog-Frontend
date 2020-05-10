@@ -4,28 +4,35 @@ import './posts.css'
 import { SideBar } from './SideBar'
 import { Post } from './Post'
 
-export const Posts = ({ snackbarState, setSnackbarState, posts, setPosts, user, setUser, recentlyViewed, setRecentlyViewed }) => {
-
+export const Posts = (props) => {
+  const {
+    posts,
+    user,
+    showSnackbarMessage,
+    recentlyViewed,
+    addRecentlyViewed,
+    updatePost,
+    deletePost
+  } = props
   return (
     <div>
       <div id='posts'>
         { posts == null ? <p id='loadingMsg'>Loading posts.</p>
-          : posts.map(post =>
+          : posts.map((post, index) =>
             <Post
               post={post}
-              posts={posts}
               user={user}
-              setUser={setUser}
-              setPosts={setPosts}
               key={post.id}
-              snackbarState={snackbarState}
-              setSnackbarState={setSnackbarState}
-              recentlyViewed={recentlyViewed}
-              setRecentlyViewed={setRecentlyViewed}/>
+              showSnackbarMessage={showSnackbarMessage}
+              addRecentlyViewed={addRecentlyViewed}
+              deletePost={deletePost}
+              updatePost={updatePost}/>
           )}
       </div>
       <SideBar
-        recentlyViewed={recentlyViewed}/>
+        recentlyViewed={recentlyViewed}
+        posts={posts}
+      />
     </div>
   )
 }

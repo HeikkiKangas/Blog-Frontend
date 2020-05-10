@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogTitle, Icon, TextField, Tooltip } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogTitle, TextField } from '@material-ui/core'
 import API_URL from './API_URL'
 import './comment.css'
 
 // Individual comment
 // Format timestamp
-const Comment = ({ postId, admin, comments, setComments, ...props }) => {
-  const [comment, setComment] = React.useState(props.comment)
+const Comment = (props) => {
+  console.log('adding comment')
+  console.log(props.comment)
+  const { postId, comment, updatePost, user } = props
   return (
     <div className="comment">
       <p className="comment-header">{comment.author}</p>
@@ -16,37 +18,43 @@ const Comment = ({ postId, admin, comments, setComments, ...props }) => {
       <Button onClick={() =>
         fetch(`${API_URL}/posts/${postId}/comment/${comment.id}/like`, { method: 'POST' })
           .then(response => response.json())
-          .then(json => setComment({ ...comment, likes: json.likes }))
+          .then(json => updatePost(json))
+          .catch(console.log)
       }>
-        {`${comment.likes} people like this`}
+        {`${comment.likes} likes`}
       </Button>
-      {props.user.admin ? <DeleteButton postId={postId} comment={comment} comments={comments} setComments={setComments} {...props}/> : null}
+      {user.admin ? <DeleteButton {...props}/> : null}
     </div>
   )
 }
 
 const DeleteButton = (props) => {
+  console.log('DeleteButton', props)
   const [open, setOpen] = React.useState(false)
   const handleCloseDialog = () => setOpen(false)
+  const { comment, showSnackbarMessage, user, updatePost } = props
 
-  const deleteComment = async ({ comment, comments, setComments, setSnackbarState }) => {
-    console.log('Deleting comment id:' + comment.id)
-    const response = await fetch(`${API_URL}/posts/${props.postId}/comment/${comment.id}`, {
+  const deleteComment = () => {
+    // if (comment === undefined) return
+    console.log('Deleting comment', comment)
+    let snackbarMessage = 'Could not delete comment.'
+
+    fetch(`${API_URL}/posts/${props.postId}/comment/${comment.id}`, {
       method: 'DELETE',
       headers: new Headers({
-        Authorization: `Basic ${btoa(`${props.user.username}:${props.user.password}`)}`
+        Authorization: `Basic ${btoa(`${user.username}:${user.password}`)}`
       })
     })
+      .then(response => {
+        if (response.ok) snackbarMessage = 'Comment deleted.'
+        showSnackbarMessage(snackbarMessage)
+        handleCloseDialog()
+        const json = response.json()
+        console.log(json)
+        return json
+      })
+      .then(updatePost)
       .catch(console.log)
-
-    const newState = { open: true, text: 'Could not delete comment.' }
-    if (response.ok) {
-      setComments(comments.filter(x => x.id !== comment.id))
-      newState.text = 'Comment deleted.'
-      handleCloseDialog()
-      window.location.reload()
-    }
-    setSnackbarState(newState)
   }
 
   return (
@@ -62,7 +70,7 @@ const DeleteButton = (props) => {
           <Button variant='contained' color='secondary' onClick={handleCloseDialog}>
             Cancel
           </Button>
-          <Button variant='contained' color='secondary' onClick={() => deleteComment(props)}>
+          <Button variant='contained' color='secondary' onClick={() => deleteComment()}>
             Delete
           </Button>
         </DialogActions>
@@ -71,19 +79,15 @@ const DeleteButton = (props) => {
   )
 }
 
-/*
-        onClick={async () => {
-        const response = await fetch(`${API_URL}/posts/${postId}/comment/${comment.id}`, { method: 'DELETE' })
-        if (response.ok) setComments(comments.filter(x => x.id !== comment.id))
-        }}>
-        Delete
-*/
-
-const Comments = ({ comments, postId, setComments, ...props }) =>
-  <div className='comments'>
-    {comments.map((comment, index) => <Comment comment={comment} key={comment.id} postId={postId} comments={comments} setComments={setComments} {...props}/>)}
-  </div>
-
+const Comments = ({ comments, postId, setComments, ...props }) => {
+  console.log(comments)
+  return (
+    <div className='comments' id={`comments-${postId}`}>
+      {comments.map((comment, index) => <Comment comment={comment} key={comment.id} postId={postId}
+        comments={comments} {...props}/>)}
+    </div>
+  )
+}
 const Form = ({ addComment }) => {
   const [newComment, setNewComment] = useState({ author: '', text: '' })
   return (
@@ -105,7 +109,7 @@ const Form = ({ addComment }) => {
 
 // The whole comment section
 export const CommentBox = (props) => {
-  const [comments, setComments] = useState(props.comments)
+  const { comments } = props
   const [visible, setVisible] = useState(false)
 
   const addComment = (newComment, setNewComment) => {
@@ -120,12 +124,10 @@ export const CommentBox = (props) => {
         body: JSON.stringify(newComment)
       })
       .then(response => response.json())
-      .then(c => setComments(comments.concat(c)))
+      .then(props.updatePost)
+      .catch(console.log)
 
     setNewComment({ author: '', text: '' })
-    console.log(comments.length)
-    comments.forEach(console.log)
-    window.location.reload()
   }
 
   return (
@@ -139,11 +141,10 @@ export const CommentBox = (props) => {
       { visible
         ? <>
           <h3>Comments</h3>
-          <Comments comments={comments} postId={props.postID} setComments={setComments} {...props}/>
+          <Comments comments={comments} postId={props.postID} {...props}/>
           <Form addComment={addComment}/>
         </>
         : null }
-      {/* <CommentForm addComment={addComment}/> */}
     </div>
   )
 }

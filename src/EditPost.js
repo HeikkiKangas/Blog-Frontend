@@ -4,7 +4,6 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import { Link, Redirect, useParams } from 'react-router-dom'
-// import GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor';
 import './editPost.css'
 import API_URL from './API_URL'
 
@@ -20,7 +19,7 @@ export const EditPost = (props) => {
         .then(response => response.json())
         .then(postDownloaded)
     } else {
-      fetch(`${API_URL}/users/1`)
+      fetch(`${API_URL}/users/${props.user.id}`)
         .then(response => response.json())
         .then(json => setPost({ text: '', author: json, title: '' }))
     }
@@ -52,8 +51,7 @@ const updatePost = (post, user) => (
         'Content-Type': 'application/json'
       }),
       body: JSON.stringify(post)
-    })
-    .then(console.log)
+    }).then(r => r.json())
     .catch(console.log)
 )
 
@@ -67,8 +65,7 @@ const createPost = (post, user) => (
         'Content-Type': 'application/json'
       }),
       body: JSON.stringify(post)
-    })
-    .then(console.log)
+    }).then(r => r.json())
     .catch(console.log)
 )
 
@@ -82,8 +79,8 @@ const SubmitButton = ({ post, setRedirect, ...props }) => (
     onClick={() => {
       console.log(post)
       post.id === undefined
-        ? createPost(post, props.user).then(setRedirect(true))
-        : updatePost(post, props.user).then(setRedirect(true))
+        ? createPost(post, props.user).then(setRedirect(true)).then(props.addPost)
+        : updatePost(post, props.user).then(setRedirect(true)).then(props.updatePost)
     }}>
     {
       post.id === undefined
@@ -109,33 +106,12 @@ const Editor = ({ post, setRedirect, ...props }) => (
           post.likes = 0
           post.comments = []
         }
-        // Can't add plugins when using built editor from ckeditor5-build.
-        // Have to use ckeditor5-editor instead.
-        // https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html
-        // const Markdown = (editor) => { editor.data.processor = new GFMDataProcessor(editor.editing.view.document) }
         console.log('Editor is ready to use!')
       }}
       onChange={(event, editor) => {
         post.text = editor.getData()
       }}
     />
-    {/*
-    <Autocomplete
-        multiple
-        id="tags"
-        options={[]}
-        defaultValue={[]}
-        freeSolo
-        renderTags={(value, getTagProps) =>
-          value.map((option, index) => (
-            <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-          ))
-        }
-        renderInput={(params) => (
-          <TextField {...params} variant="outlined" label="Tags" placeholder="Favorites" />
-        )}
-      />
-    */}
     <br/>
     <SubmitButton post={post} setRedirect={setRedirect} {...props}/>
   </div>

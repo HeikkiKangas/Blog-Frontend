@@ -4,16 +4,14 @@ import Button from '@material-ui/core/Button'
 import './Login.css'
 import { TextField } from '@material-ui/core'
 import API_URL from './API_URL'
-import Redirect from 'react-router-dom/es/Redirect'
+import { Redirect } from 'react-router-dom'
 
 export const Login = (props) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
 
-  function validateForm () {
-    return username.length > 0 && password.length > 0
-  }
+  const validateForm = () => username.length > 0 && password.length > 0
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -25,11 +23,7 @@ export const Login = (props) => {
       })
     })
       .then(response => response.json())
-      .then(json => {
-        const user = { username: username, password: password, admin: json.admin }
-        props.setUser(user)
-        localStorage.setItem('user', JSON.stringify(user))
-      })
+      .then(json => props.login({ password: password, ...json }))
       .then(() => setRedirect(true))
       .catch(console.log)
   }

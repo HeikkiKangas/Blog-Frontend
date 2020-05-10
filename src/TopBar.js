@@ -57,7 +57,7 @@ const SearchBar = ({ posts }) => {
           if (e.target.dataset.optionIndex) {
             const postId = posts[(Number(e.target.dataset.optionIndex))].id
             const element = document.getElementById('post' + postId)
-            element.scrollIntoView()
+            if (element) element.scrollIntoView()
             console.log(postId)
           }
         }}

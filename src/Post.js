@@ -7,11 +7,12 @@ import API_URL from './API_URL'
 import './post.css'
 
 export const Post = (props) => {
-  const [post, setPost] = React.useState(props.post)
+  const post = props.post
   const [open, setOpen] = React.useState(false)
+  const comments = post.comments
   const text = open ? post.text : post.text.substring(0, 350) + '...'
   const admin = props.user.admin
-  const { recentlyViewed, setRecentlyViewed } = props
+  const { addRecentlyViewed } = props
   return (
     <div className='post' id={'post' + post.id}>
       {admin ? <EditButton id={post.id}/> : null}
@@ -22,23 +23,17 @@ export const Post = (props) => {
       <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
       <Button onClick={() => {
         setOpen(!open)
-        if (!recentlyViewed.includes(post)) {
-          const newList = recentlyViewed.length > 4
-            ? [post, ...recentlyViewed.slice(0, 4)]
-            : [post, ...recentlyViewed]
-          setRecentlyViewed(newList)
-          localStorage.setItem('recentlyViewed', JSON.stringify(newList))
-        }
+        addRecentlyViewed(post)
       }}>{ open ? 'Close post' : 'Read post'}</Button>
       <div>
-        <Likes post={post} setPost={setPost}/>
-        <CommentBox postID={post.id} comments={post.comments} {...props}/>
+        <Likes post={post} updatePost={props.updatePost}/>
+        <CommentBox postID={post.id} comments={comments} {...props}/>
       </div>
     </div>
   )
 }
 
-const Likes = ({ post, setPost }) =>
+const Likes = ({ post, updatePost }) =>
   <a
     id='likeCount'
     href='#'
@@ -46,16 +41,16 @@ const Likes = ({ post, setPost }) =>
       e.preventDefault()
       fetch(`${API_URL}/posts/${post.id}/like`, { method: 'POST' })
         .then(response => response.json())
-        .then(json => setPost({ ...post, likes: json.likes }))
+        .then(updatePost)
     }}>
-    {post.likes} people like this
+    {post.likes} likes
   </a>
 
 const DeleteButton = (props) => {
   const [open, setOpen] = React.useState(false)
   const handleCloseDialog = () => setOpen(false)
 
-  const deletePost = async ({ post, posts, setPosts, setSnackbarState }) => {
+  const deletePost = async ({ post }) => {
     console.log('Deleting post id:' + post.id)
     const response = await fetch(
       `${API_URL}/posts/${post.id}`, {
@@ -66,12 +61,13 @@ const DeleteButton = (props) => {
       })
       .catch(console.log)
 
-    const newState = { open: true, text: `Could not delete ${post.title}.` }
+    let snackbarMessage = `Could not delete ${post.title}.`
     if (response.ok) {
-      setPosts(posts.filter(p => p.id !== post.id))
-      newState.text = `${post.title} deleted.`
+      setOpen(false)
+      props.deletePost(post.id)
+      snackbarMessage = `${post.title} deleted.`
     }
-    setSnackbarState(newState)
+    props.showSnackbarMessage(snackbarMessage)
   }
 
   return (
